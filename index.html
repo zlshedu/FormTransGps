@@ -213,11 +213,118 @@
     .gps-link.visible { opacity: 0.85; height: auto; margin-top: 1px; }
     .gps-link:hover { opacity: 1; text-decoration: underline; }
     .gps-error-detail {
-      font-size: 10px; color: var(--danger); line-height: 1.4; padding: 4px 7px;
+      font-size: 10px; color: var(--danger); line-height: 1.5; padding: 5px 7px;
       background: rgba(248,113,113,0.04); border-radius: 5px;
       border: 1px solid rgba(248,113,113,0.12); display: none; animation: fadeUp 0.3s ease;
     }
     .gps-error-detail.visible { display: block; }
+    .gps-error-detail .gps-error-title {
+      font-weight: 700; font-size: 10px; margin-bottom: 3px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .gps-error-detail .gps-error-title.gps-off { color: var(--warning); }
+    .gps-error-detail .gps-error-title.perm-denied { color: var(--danger); }
+    .gps-error-detail .gps-error-title.no-signal { color: var(--info); }
+    .gps-error-detail .gps-error-title.timeout { color: var(--fg-muted); }
+    .gps-error-detail ul {
+      margin: 3px 0 0 14px; padding: 0;
+      list-style: disc;
+    }
+    .gps-error-detail li { margin-bottom: 2px; }
+    .gps-error-detail strong { color: #fca5a5; }
+
+    /* Modal GPS apagado */
+    .gps-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .gps-modal-overlay.visible {
+      opacity: 1; pointer-events: auto;
+    }
+    .gps-modal {
+      background: var(--card);
+      border: 1.5px solid rgba(251,191,36,0.25);
+      border-radius: 18px;
+      padding: 28px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gps-modal-overlay.visible .gps-modal {
+      transform: scale(1);
+    }
+    .gps-modal-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(251,191,36,0.08);
+      border: 2px solid rgba(251,191,36,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .gps-modal-icon i {
+      font-size: 26px;
+      color: var(--warning);
+      animation: gpsPulseWarn 2s ease-in-out infinite;
+    }
+    @keyframes gpsPulseWarn {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.9); }
+    }
+    .gps-modal h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--warning);
+      margin-bottom: 10px;
+    }
+    .gps-modal p {
+      font-size: 13px; color: var(--fg-muted);
+      line-height: 1.6; margin-bottom: 8px;
+    }
+    .gps-modal .gps-steps {
+      text-align: left;
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0 18px;
+      border: 1px solid var(--border);
+    }
+    .gps-modal .gps-steps-title {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+      margin-bottom: 8px;
+    }
+    .gps-modal .gps-steps ol {
+      margin: 0; padding: 0 0 0 16px;
+      font-size: 12px; color: var(--fg);
+      line-height: 1.7;
+    }
+    .gps-modal .gps-steps ol li strong { color: var(--warning); }
+    .gps-modal-btns {
+      display: flex; gap: 8px;
+    }
+    .gps-modal-btns .btn { flex: 1; justify-content: center; font-size: 13px; padding: 10px 14px; }
+    .btn-modal-cancel {
+      background: var(--bg); color: var(--fg-muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-modal-cancel:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .btn-modal-retry {
+      background: rgba(251,191,36,0.12); color: var(--warning);
+      border: 1.5px solid rgba(251,191,36,0.3);
+    }
+    .btn-modal-retry:hover {
+      background: rgba(251,191,36,0.2); border-color: var(--warning);
+    }
 
     .acciones { display: flex; flex-wrap: wrap; gap: 10px; animation: fadeUp 0.45s ease 0.15s both; }
     #mensaje { margin-top: 16px; font-size: 13px; font-weight: 500; padding: 10px 16px; border-radius: 8px; animation: fadeUp 0.3s ease; min-height: 0; }
@@ -292,6 +399,10 @@
       .btn-gps { font-size: 10px; padding: 5px 9px; }
       .gps-coords { font-size: 9px; }
       .gps-error-detail { font-size: 9px; }
+      .gps-modal { padding: 22px 18px; }
+      .gps-modal h3 { font-size: 16px; }
+      .gps-modal p { font-size: 12px; }
+      .gps-modal .gps-steps ol { font-size: 11px; }
     }
   </style>
 </head>
@@ -309,6 +420,29 @@
       }
     })();
   </script>
+
+  <!-- Modal GPS apagado -->
+  <div class="gps-modal-overlay" id="gpsModal">
+    <div class="gps-modal">
+      <div class="gps-modal-icon">
+        <i class="fa-solid fa-location-crosshairs"></i>
+      </div>
+      <h3>La ubicación está desactivada</h3>
+      <p>Parece que el GPS de tu dispositivo está apagado. Actívalo para poder registrar la posición.</p>
+      <div class="gps-steps" id="gpsSteps">
+        <div class="gps-steps-title">Cómo activarlo</div>
+        <ol id="gpsStepsList"></ol>
+      </div>
+      <div class="gps-modal-btns">
+        <button class="btn btn-modal-cancel" onclick="cerrarModalGPS()">
+          <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+        <button class="btn btn-modal-retry" onclick="reintentarDesdeModal()">
+          <i class="fa-solid fa-rotate-right"></i> Reintentar
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div class="toast-guardado" id="toastGuardado">
     <i class="fa-solid fa-circle-check"></i>
@@ -395,6 +529,7 @@
     let allItemsConfig = [];
     let codigoTransporteActual = '';
     let itemsOriginalesCargados = [];
+    let botonGPSPendiente = null; // Guarda referencia al botón GPS que activó el modal
 
     /* ---------- Utilidades de UI ---------- */
     function msg(text, type) {
@@ -439,6 +574,131 @@
     }
 
     /* ============================================
+       Detección de plataforma para instrucciones
+       ============================================ */
+    function detectarPlataforma() {
+      const ua = navigator.userAgent || '';
+      if (/iPhone|iPad|iPod/.test(ua)) return 'ios';
+      if (/Android/.test(ua)) return 'android';
+      return 'otro';
+    }
+
+    function obtenerPasosActivarGPS() {
+      const plataforma = detectarPlataforma();
+      if (plataforma === 'android') {
+        return [
+          'Desliza la <strong>barra de notificaciones</strong> hacia abajo',
+          'Busca el icono de <strong>Ubicación</strong> o <strong>GPS</strong>',
+          'Tócalo para <strong>activarlo</strong> (se pone azul/encendido)',
+          'Vuelve aquí y presiona <strong>Reintentar</strong>'
+        ];
+      }
+      if (plataforma === 'ios') {
+        return [
+          'Ve a <strong>Ajustes</strong> del iPhone',
+          'Busca <strong>Privacidad y seguridad</strong>',
+          'Toca <strong>Ubicación</strong> y actívala',
+          'Vuelve aquí y presiona <strong>Reintentar</strong>'
+        ];
+      }
+      return [
+        'Activa la <strong>ubicación</strong> en la configuración de tu sistema',
+        'En Windows: Ajustes > Privacidad > Ubicación > Activar',
+        'En Mac: Ajustes del Sistema > Privacidad > Ubicación',
+        'Vuelve aquí y presiona <strong>Reintentar</strong>'
+      ];
+    }
+
+    /* ============================================
+       Modal GPS apagado
+       ============================================ */
+    function abrirModalGPS(boton) {
+      botonGPSPendiente = boton;
+      const pasos = obtenerPasosActivarGPS();
+      const listaEl = document.getElementById('gpsStepsList');
+      listaEl.innerHTML = pasos.map(p => `<li>${p}</li>`).join('');
+      document.getElementById('gpsModal').classList.add('visible');
+    }
+
+    function cerrarModalGPS() {
+      document.getElementById('gpsModal').classList.remove('visible');
+      // Restaurar botón a estado inicial
+      if (botonGPSPendiente) {
+        botonGPSPendiente.classList.remove('capturando');
+        botonGPSPendiente.innerHTML = '<i class="fa-solid fa-satellite-dish"></i> GPS';
+      }
+      botonGPSPendiente = null;
+    }
+
+    function reintentarDesdeModal() {
+      document.getElementById('gpsModal').classList.remove('visible');
+      const boton = botonGPSPendiente;
+      botonGPSPendiente = null;
+      if (boton) {
+        // Pequeña pausa para que el GPS se reactive
+        setTimeout(() => capturarGPS(boton), 500);
+      }
+    }
+
+    /* ============================================
+       Analizar si el error es GPS apagado
+       ============================================ */
+    function esGPSApagado(error) {
+      if (error.code !== error.PERMISSION_DENIED) return false;
+
+      const msg = (error.message || '').toLowerCase();
+
+      // Patrones que indican GPS apagado a nivel del sistema
+      const patronesGPSOff = [
+        'location service is not available',
+        'location services are not available',
+        'location service has been disabled',
+        'location not available',
+        'no location provider',
+        'location provider',
+        'gps not available',
+        'location is not enabled',
+        'location is disabled',
+        'location setting',
+        'network location provider',
+        'location provider at',
+        'only secure origins',
+        'not available on this device',
+        'location access is turned off',
+        'location is turned off',
+        'location services is off',
+        'location service is off'
+      ];
+
+      // Patrones que indican que el usuario negó el permiso del navegador
+      const patronesPermisoDenegado = [
+        'user denied',
+        'denied by user',
+        'permission denied',
+        'user blocked',
+        'access denied',
+        'you have denied access'
+      ];
+
+      // Si contiene "denied" o "user" probablemente es permiso del navegador
+      const esPermiso = patronesPermisoDenegado.some(p => msg.includes(p));
+      if (esPermiso) return false;
+
+      // Si contiene patrones de GPS apagado
+      const esApagado = patronesGPSOff.some(p => msg.includes(p));
+      if (esApagado) return true;
+
+      // Si el mensaje está vacío o genérico y es PERMISSION_DENIED,
+      // en Android suele ser GPS apagado, en iOS puede ser cualquiera
+      // Usamos heurística: si no menciona "user" ni "denied", asumimos GPS apagado
+      if (msg.length === 0 || msg === 'permission denied') {
+        return detectarPlataforma() === 'android';
+      }
+
+      return false;
+    }
+
+    /* ============================================
        GPS — Captura de ubicación por fila
        ============================================ */
     function capturarGPS(boton) {
@@ -462,7 +722,7 @@
         boton.classList.remove('capturando');
         boton.classList.add('error-gps');
         boton.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> No soportado';
-        errorEl.innerHTML = 'Tu navegador no soporta geolocalización. Intenta con otro navegador.';
+        errorEl.innerHTML = `<div class="gps-error-title no-signal"><i class="fa-solid fa-circle-info"></i> Navegador incompatible</div>Tu navegador no soporta geolocalización. Intenta con Chrome o Safari.`;
         errorEl.classList.add('visible');
         return;
       }
@@ -471,7 +731,7 @@
         boton.classList.remove('capturando');
         boton.classList.add('error-gps');
         boton.innerHTML = '<i class="fa-solid fa-lock"></i> Sin HTTPS';
-        errorEl.innerHTML = 'La geolocalización requiere <strong>HTTPS</strong>. Abre esta página con https:// en la dirección.';
+        errorEl.innerHTML = `<div class="gps-error-title perm-denied"><i class="fa-solid fa-lock"></i> Falta conexión segura</div>La geolocalización requiere <strong>HTTPS</strong>. Abre esta página con <strong>https://</strong> en la dirección.`;
         errorEl.classList.add('visible');
         return;
       }
@@ -502,8 +762,17 @@
         },
         function(error) {
           boton.classList.remove('capturando');
-          boton.classList.add('error-gps');
 
+          // Detectar si es GPS apagado vs permiso denegado
+          if (esGPSApagado(error)) {
+            // Mostrar modal con instrucciones para activar GPS
+            boton.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> GPS apagado';
+            abrirModalGPS(boton);
+            return;
+          }
+
+          // Resto de errores: mostrar detalle inline
+          boton.classList.add('error-gps');
           let titulo = '';
           let detalle = '';
 
@@ -511,26 +780,48 @@
             case error.PERMISSION_DENIED:
               titulo = '<i class="fa-solid fa-ban"></i> Permiso denegado';
               detalle =
-                'El navegador bloqueó el acceso a tu ubicación.<br><br>' +
-                '<strong>Para activarlo:</strong><br>' +
-                '1. Toca el candado o icono de info junto a la dirección<br>' +
-                '2. Busca "Ubicación" o "Location"<br>' +
-                '3. Cámbialo a "Permitir"<br>' +
-                '4. Recarga la página y vuelve a intentar<br><br>' +
-                '<strong>Android (Chrome):</strong> Ajustes > Apps > Chrome > Permisos > Ubicación<br>' +
-                '<strong>iPhone (Safari):</strong> Ajustes > Safari > Ubicación > Permitir';
+                `<div class="gps-error-title perm-denied"><i class="fa-solid fa-ban"></i> Permiso denegado por el navegador</div>` +
+                `El navegador bloqueó el acceso a la ubicación.<br><br>` +
+                `<strong>Para activarlo:</strong>` +
+                `<ul>` +
+                `<li>Toca el <strong>candado</strong> o icono de info junto a la dirección</li>` +
+                `<li>Busca <strong>"Ubicación"</strong> o <strong>"Location"</strong></li>` +
+                `<li>Cámbialo a <strong>"Permitir"</strong></li>` +
+                `<li>Recarga la página y vuelve a intentar</li>` +
+                `</ul>` +
+                `<strong>Android:</strong> Ajustes > Apps > Chrome > Permisos > Ubicación<br>` +
+                `<strong>iPhone:</strong> Ajustes > Safari > Ubicación > Permitir`;
               break;
             case error.POSITION_UNAVAILABLE:
               titulo = '<i class="fa-solid fa-satellite-dish"></i> Sin señal';
-              detalle = 'No se pudo determinar tu posición. Asegúrate de estar al aire libre con GPS activado.';
+              boton.innerHTML = titulo;
+              detalle =
+                `<div class="gps-error-title no-signal"><i class="fa-solid fa-satellite-dish"></i> Sin señal GPS</div>` +
+                `No se pudo determinar tu posición.` +
+                `<ul>` +
+                `<li>Asegúrate de estar <strong>al aire libre</strong></li>` +
+                `<li>Verifica que el <strong>GPS esté activado</strong></li>` +
+                `<li>Espera unos segundos y vuelve a intentar</li>` +
+                `</ul>`;
               break;
             case error.TIMEOUT:
               titulo = '<i class="fa-solid fa-clock"></i> Tiempo agotado';
-              detalle = 'Tardó demasiado en obtener la señal GPS. Verifica que el GPS esté activado y vuelve a intentar.';
+              boton.innerHTML = titulo;
+              detalle =
+                `<div class="gps-error-title timeout"><i class="fa-solid fa-clock"></i> Tiempo agotado</div>` +
+                `Tardó demasiado en obtener la señal GPS.` +
+                `<ul>` +
+                `<li>Verifica que el <strong>GPS esté activado</strong></li>` +
+                `<li>Aléjate de edificios cerrados</li>` +
+                `<li>Vuelve a intentar</li>` +
+                `</ul>`;
               break;
             default:
               titulo = '<i class="fa-solid fa-xmark"></i> Error';
-              detalle = 'Ocurrió un error inesperado al obtener la ubicación.';
+              boton.innerHTML = titulo;
+              detalle =
+                `<div class="gps-error-title perm-denied"><i class="fa-solid fa-xmark"></i> Error desconocido</div>` +
+                `Ocurrió un error inesperado: ${error.message || 'Sin detalle'}`;
           }
 
           boton.innerHTML = titulo;
@@ -914,6 +1205,11 @@
         descargarCSV();
       }
     }
+
+    // Cerrar modal con clic en overlay
+    document.getElementById('gpsModal').addEventListener('click', function(e) {
+      if (e.target === this) cerrarModalGPS();
+    });
 
     window.addEventListener('DOMContentLoaded', inicializarApp);
   </script>
