@@ -3,443 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236366f1'/%3E%3Cpath d='M30 22 H70 M30 50 H60 M30 78 H70 M30 22 V78' stroke='%23ffffff' stroke-width='12' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
   <title>Lista con código de transporte</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --bg: #0c0e14;
-      --bg-surface: #13161f;
-      --card: #1a1e2b;
-      --card-hover: #212637;
-      --border: #282d3e;
-      --border-focus: #e8913a;
-      --fg: #eaedf6;
-      --fg-muted: #7b829a;
-      --accent: #e8913a;
-      --accent-glow: rgba(232,145,58,0.12);
-      --accent-hover: #f0a050;
-      --success: #34d399;
-      --danger: #f87171;
-      --info: #60a5fa;
-      --warning: #fbbf24;
-      --purple: #a78bfa;
-      --row-alt: rgba(255,255,255,0.015);
+      --bg: #0c0e14; --bg-surface: #13161f; --card: #1a1e2b; --card-hover: #212637;
+      --border: #282d3e; --border-focus: #e8913a; --fg: #eaedf6; --fg-muted: #7b829a;
+      --accent: #e8913a; --accent-glow: rgba(232,145,58,0.12); --accent-hover: #f0a050;
+      --success: #34d399; --danger: #f87171; --info: #60a5fa; --warning: #fbbf24;
+      --purple: #a78bfa; --row-alt: rgba(255,255,255,0.015);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      min-height: 100vh;
-      padding: 24px 16px 60px;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: -40%; left: -40%;
-      width: 180%; height: 180%;
-      background:
-        radial-gradient(ellipse 500px 350px at 15% 15%, rgba(232,145,58,0.04), transparent),
-        radial-gradient(ellipse 400px 400px at 85% 80%, rgba(167,139,250,0.03), transparent);
-      pointer-events: none; z-index: 0;
-      animation: bgDrift 25s ease-in-out infinite alternate;
-    }
-    @keyframes bgDrift {
-      0% { transform: translate(0,0) rotate(0deg); }
-      100% { transform: translate(-20px,-15px) rotate(1.5deg); }
-    }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
+    * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; box-sizing: border-box; margin: 0; padding: 0; }
+    input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; padding: 24px 16px 60px; }
+    body::before { content: ''; position: fixed; top: -40%; left: -40%; width: 180%; height: 180%; background: radial-gradient(ellipse 500px 350px at 15% 15%, rgba(232,145,58,0.04), transparent), radial-gradient(ellipse 400px 400px at 85% 80%, rgba(167,139,250,0.03), transparent); pointer-events: none; z-index: 0; animation: bgDrift 25s ease-in-out infinite alternate; }
+    @keyframes bgDrift { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-20px,-15px) rotate(1.5deg); } }
+    ::-webkit-scrollbar { width: 5px; height: 5px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     .container { max-width: 1100px; margin: auto; position: relative; z-index: 1; }
     .page-header { text-align: center; margin-bottom: 32px; }
-    .page-header .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 14px; border-radius: 999px;
-      background: var(--card); border: 1px solid var(--border);
-      font-size: 11px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--fg-muted); margin-bottom: 14px;
-    }
+    .page-header .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted); margin-bottom: 14px; }
     .page-header .badge i { color: var(--accent); }
-    .page-header h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
-    }
+    .page-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
     .page-header h1 span { color: var(--accent); }
-    .status {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 12px 18px; margin-bottom: 24px;
-      font-size: 13px; font-weight: 500; color: var(--fg-muted);
-      animation: fadeUp 0.4s ease;
-    }
-    .status i { font-size: 14px; }
-    .status.ok i { color: var(--success); }
-    .status.warn i { color: var(--warning); }
-    .status.err i { color: var(--danger); }
-    .status.load i { color: var(--info); animation: spin 1s linear infinite; }
+    .status { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; margin-bottom: 24px; font-size: 13px; font-weight: 500; color: var(--fg-muted); animation: fadeUp 0.4s ease; }
+    .status i { font-size: 14px; } .status.ok i { color: var(--success); } .status.warn i { color: var(--warning); } .status.err i { color: var(--danger); } .status.load i { color: var(--info); animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .code-section {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px; margin-bottom: 28px;
-      animation: fadeUp 0.45s ease 0.05s both;
-    }
-    .code-section-label {
-      font-size: 13px; font-weight: 600; color: var(--fg-muted);
-      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .code-section { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 28px; animation: fadeUp 0.45s ease 0.05s both; }
+    .code-section-label { font-size: 13px; font-weight: 600; color: var(--fg-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .code-row { display: flex; gap: 10px; align-items: stretch; }
-    .code-input {
-      flex: 1; background: var(--bg); border: 1.5px solid var(--border);
-      color: var(--fg); border-radius: 10px; padding: 12px 16px;
-      font-family: 'Space Grotesk', sans-serif; font-size: 16px;
-      font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-      outline: none; transition: all 0.25s ease;
-    }
+    .code-input { flex: 1; background: var(--bg); border: 1.5px solid var(--border); color: var(--fg); border-radius: 10px; padding: 12px 16px; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; outline: none; transition: all 0.25s ease; }
     .code-input::placeholder { color: var(--fg-muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
-    .code-input:hover { border-color: #3a4060; }
-    .code-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .code-input:hover { border-color: #3a4060; } .code-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     .code-input:disabled { background: var(--bg-surface); border-color: var(--border); color: var(--fg-muted); cursor: not-allowed; opacity: 0.6; }
     .btn-cargar:disabled { background: var(--border); color: var(--fg-muted); cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px;
-      padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer;
-      transition: all 0.25s ease; white-space: nowrap; text-decoration: none;
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-    .btn-cargar { background: var(--accent); color: #0f1117; }
-    .btn-cargar:hover { background: var(--accent-hover); box-shadow: 0 4px 20px rgba(232,145,58,0.3); transform: translateY(-1px); }
-    .btn-guardar { background: rgba(52,211,153,0.1); color: var(--success); border: 1.5px solid rgba(52,211,153,0.25); }
-    .btn-guardar:hover { background: rgba(52,211,153,0.18); border-color: var(--success); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(52,211,153,0.15); }
-    .btn-guardar.guardando { pointer-events: none; opacity: 0.7; }
-    .btn-guardar.guardando i { animation: spin 0.8s linear infinite; }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700;
-      color: var(--fg); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-    }
-    .section-title .count {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px;
-      background: var(--accent-glow); border: 1px solid rgba(232,145,58,0.2);
-      color: var(--accent); font-size: 12px; font-weight: 700;
-    }
-    .table-wrap {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden; margin-bottom: 24px;
-      animation: fadeUp 0.45s ease 0.1s both;
-    }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer; transition: all 0.25s ease; white-space: nowrap; text-decoration: none; }
+    .btn:active { transform: scale(0.97); } .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    .btn-cargar { background: var(--accent); color: #0f1117; } .btn-cargar:hover { background: var(--accent-hover); box-shadow: 0 4px 20px rgba(232,145,58,0.3); transform: translateY(-1px); }
+    .btn-guardar { background: rgba(52,211,153,0.1); color: var(--success); border: 1.5px solid rgba(52,211,153,0.25); } .btn-guardar:hover { background: rgba(52,211,153,0.18); border-color: var(--success); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(52,211,153,0.15); }
+    .btn-guardar.guardando { pointer-events: none; opacity: 0.7; } .btn-guardar.guardando i { animation: spin 0.8s linear infinite; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--fg); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-title .count { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px; background: var(--accent-glow); border: 1px solid rgba(232,145,58,0.2); color: var(--accent); font-size: 12px; font-weight: 700; }
+    .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 24px; animation: fadeUp 0.45s ease 0.1s both; }
     .table-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 700px; }
     thead { background: var(--bg-surface); }
-    th {
-      padding: 12px 12px; text-align: left; font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted);
-      border-bottom: 1px solid var(--border); white-space: nowrap;
-    }
+    th { padding: 12px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
     th i { margin-right: 4px; font-size: 10px; opacity: 0.7; }
     td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
-    tbody tr { transition: background 0.2s ease; }
-    tbody tr:nth-child(even) { background: var(--row-alt); }
-    tbody tr:hover { background: var(--card-hover); }
-    tbody tr:last-child td { border-bottom: none; }
-    .row-num {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px;
-      color: var(--fg-muted); background: var(--bg); border-radius: 6px;
-      width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center;
-    }
+    tbody tr { transition: background 0.2s ease; } tbody tr:nth-child(even) { background: var(--row-alt); } tbody tr:hover { background: var(--card-hover); } tbody tr:last-child td { border-bottom: none; }
+    .row-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: var(--fg-muted); background: var(--bg); border-radius: 6px; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; }
     .item-name { font-weight: 500; color: var(--fg); }
-    .tbl-input {
-      background: var(--bg); border: 1.5px solid var(--border); color: var(--fg);
-      border-radius: 8px; padding: 9px 12px; font-family: 'DM Sans', sans-serif;
-      font-size: 13px; width: 100%; min-width: 100px; outline: none;
-      transition: all 0.25s ease; height: 40px;
-    }
-    .tbl-input::placeholder { color: #4a5068; }
-    .tbl-input:hover { border-color: #3a4060; }
-    .tbl-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .tbl-input.time { min-width: 120px; cursor: pointer; }
-    .tbl-input.sector { text-transform: uppercase; }
-    select.tbl-input {
-      -webkit-appearance: none; -moz-appearance: none; appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237b829a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat; background-position: right 10px center;
-      background-size: 14px; padding-right: 30px;
-    }
+    .tbl-input { background: var(--bg); border: 1.5px solid var(--border); color: var(--fg); border-radius: 8px; padding: 9px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; width: 100%; min-width: 100px; outline: none; transition: all 0.25s ease; height: 40px; }
+    .tbl-input::placeholder { color: #4a5068; } .tbl-input:hover { border-color: #3a4060; } .tbl-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .tbl-input.time { min-width: 120px; cursor: pointer; } .tbl-input.sector { text-transform: uppercase; }
+    select.tbl-input { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237b829a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 30px; }
     select.tbl-input option { background: var(--bg-surface); color: var(--fg); }
 
-    /* GPS */
     .gps-cell { display: flex; flex-direction: column; gap: 5px; min-width: 120px; }
-    .btn-gps {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 11px;
-      padding: 6px 12px; border-radius: 7px;
-      border: 1.5px solid rgba(96,165,250,0.25);
-      background: rgba(96,165,250,0.08); color: var(--info);
-      cursor: pointer; transition: all 0.25s ease;
-      white-space: nowrap; width: fit-content;
-    }
-    .btn-gps:hover { background: rgba(96,165,250,0.18); border-color: var(--info); transform: translateY(-1px); box-shadow: 0 3px 12px rgba(96,165,250,0.15); }
-    .btn-gps:active { transform: scale(0.95); }
-    .btn-gps.capturando { pointer-events: none; opacity: 0.65; }
-    .btn-gps.capturando i { animation: spin 1s linear infinite; }
-    .btn-gps.capturado { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); color: var(--success); cursor: pointer; }
-    .btn-gps.capturado:hover { background: rgba(52,211,153,0.15); border-color: var(--success); }
+    .gps-botones { display: flex; align-items: center; gap: 5px; }
+    .btn-gps { display: inline-flex; align-items: center; gap: 5px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 11px; padding: 6px 12px; border-radius: 7px; border: 1.5px solid rgba(96,165,250,0.25); background: rgba(96,165,250,0.08); color: var(--info); cursor: pointer; transition: all 0.25s ease; white-space: nowrap; width: fit-content; }
+    .btn-gps:hover { background: rgba(96,165,250,0.18); border-color: var(--info); transform: translateY(-1px); box-shadow: 0 3px 12px rgba(96,165,250,0.15); } .btn-gps:active { transform: scale(0.95); }
+    .btn-gps.capturando { pointer-events: none; opacity: 0.65; } .btn-gps.capturando i { animation: spin 1s linear infinite; }
+    .btn-gps.capturado { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); color: var(--success); cursor: pointer; } .btn-gps.capturado:hover { background: rgba(52,211,153,0.15); border-color: var(--success); }
     .btn-gps.error-gps { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.08); color: var(--danger); }
-    .gps-coords {
-      font-family: 'Space Grotesk', monospace; font-size: 10px; color: var(--fg-muted);
-      line-height: 1.4; padding: 4px 7px; background: var(--bg); border-radius: 5px;
-      border: 1px solid var(--border); word-break: break-all; min-height: 0; display: none;
+
+    /* Botón X para eliminar ubicación */
+    .btn-eliminar-gps {
+      display: none; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px;
+      border: 1.5px solid rgba(248,113,113,0.2);
+      background: rgba(248,113,113,0.06);
+      color: var(--danger); cursor: pointer;
+      transition: all 0.2s ease; font-size: 10px; flex-shrink: 0;
     }
+    .btn-eliminar-gps:hover {
+      background: rgba(248,113,113,0.15); border-color: var(--danger);
+      transform: scale(1.1);
+    }
+    .btn-eliminar-gps:active { transform: scale(0.9); }
+    .btn-eliminar-gps.visible { display: inline-flex; }
+
+    .gps-coords { font-family: 'Space Grotesk', monospace; font-size: 10px; color: var(--fg-muted); line-height: 1.4; padding: 4px 7px; background: var(--bg); border-radius: 5px; border: 1px solid var(--border); word-break: break-all; display: none; }
     .gps-coords.visible { display: block; animation: fadeUp 0.3s ease; }
     .gps-coords .lat-label, .gps-coords .lng-label { color: var(--info); font-weight: 600; }
-    .gps-coords.capturado { border-color: rgba(52,211,153,0.2); }
-    .gps-coords.capturado .lat-label, .gps-coords.capturado .lng-label { color: var(--success); }
-    .gps-link {
-      display: inline-flex; align-items: center; gap: 3px; font-size: 10px;
-      color: var(--info); text-decoration: none; opacity: 0; height: 0; overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    .gps-link.visible { opacity: 0.85; height: auto; margin-top: 1px; }
-    .gps-link:hover { opacity: 1; text-decoration: underline; }
-    .gps-error-detail {
-      font-size: 10px; color: var(--danger); line-height: 1.5; padding: 5px 7px;
-      background: rgba(248,113,113,0.04); border-radius: 5px;
-      border: 1px solid rgba(248,113,113,0.12); display: none; animation: fadeUp 0.3s ease;
-    }
+    .gps-coords.capturado { border-color: rgba(52,211,153,0.2); } .gps-coords.capturado .lat-label, .gps-coords.capturado .lng-label { color: var(--success); }
+    .gps-link { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--info); text-decoration: none; opacity: 0; height: 0; overflow: hidden; transition: all 0.3s ease; }
+    .gps-link.visible { opacity: 0.85; height: auto; margin-top: 1px; } .gps-link:hover { opacity: 1; text-decoration: underline; }
+    .gps-error-detail { font-size: 10px; color: var(--danger); line-height: 1.5; padding: 5px 7px; background: rgba(248,113,113,0.04); border-radius: 5px; border: 1px solid rgba(248,113,113,0.12); display: none; animation: fadeUp 0.3s ease; }
     .gps-error-detail.visible { display: block; }
-    .gps-error-detail .gps-error-title {
-      font-weight: 700; font-size: 10px; margin-bottom: 3px;
-      display: flex; align-items: center; gap: 4px;
-    }
-    .gps-error-detail .gps-error-title.gps-off { color: var(--warning); }
-    .gps-error-detail .gps-error-title.perm-denied { color: var(--danger); }
-    .gps-error-detail .gps-error-title.no-signal { color: var(--info); }
-    .gps-error-detail .gps-error-title.timeout { color: var(--fg-muted); }
-    .gps-error-detail ul {
-      margin: 3px 0 0 14px; padding: 0;
-      list-style: disc;
-    }
-    .gps-error-detail li { margin-bottom: 2px; }
-    .gps-error-detail strong { color: #fca5a5; }
-
-    /* Modal GPS apagado */
-    .gps-modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .gps-modal-overlay.visible {
-      opacity: 1; pointer-events: auto;
-    }
-    .gps-modal {
-      background: var(--card);
-      border: 1.5px solid rgba(251,191,36,0.25);
-      border-radius: 18px;
-      padding: 28px 24px;
-      max-width: 380px;
-      width: 100%;
-      text-align: center;
-      transform: scale(0.92);
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    .gps-modal-overlay.visible .gps-modal {
-      transform: scale(1);
-    }
-    .gps-modal-icon {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      background: rgba(251,191,36,0.08);
-      border: 2px solid rgba(251,191,36,0.2);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
-    }
-    .gps-modal-icon i {
-      font-size: 26px;
-      color: var(--warning);
-      animation: gpsPulseWarn 2s ease-in-out infinite;
-    }
-    @keyframes gpsPulseWarn {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(0.9); }
-    }
-    .gps-modal h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px; font-weight: 700;
-      color: var(--warning);
-      margin-bottom: 10px;
-    }
-    .gps-modal p {
-      font-size: 13px; color: var(--fg-muted);
-      line-height: 1.6; margin-bottom: 8px;
-    }
-    .gps-modal .gps-steps {
-      text-align: left;
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin: 12px 0 18px;
-      border: 1px solid var(--border);
-    }
-    .gps-modal .gps-steps-title {
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--fg-muted);
-      margin-bottom: 8px;
-    }
-    .gps-modal .gps-steps ol {
-      margin: 0; padding: 0 0 0 16px;
-      font-size: 12px; color: var(--fg);
-      line-height: 1.7;
-    }
+    .gps-error-detail .gps-error-title { font-weight: 700; font-size: 10px; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
+    .gps-error-detail .gps-error-title.gps-off { color: var(--warning); } .gps-error-detail .gps-error-title.perm-denied { color: var(--danger); } .gps-error-detail .gps-error-title.no-signal { color: var(--info); } .gps-error-detail .gps-error-title.timeout { color: var(--fg-muted); }
+    .gps-error-detail ul { margin: 3px 0 0 14px; padding: 0; list-style: disc; } .gps-error-detail li { margin-bottom: 2px; } .gps-error-detail strong { color: #fca5a5; }
+    .gps-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .gps-modal-overlay.visible { opacity: 1; pointer-events: auto; }
+    .gps-modal { background: var(--card); border: 1.5px solid rgba(251,191,36,0.25); border-radius: 18px; padding: 28px 24px; max-width: 380px; width: 100%; text-align: center; transform: scale(0.92); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+    .gps-modal-overlay.visible .gps-modal { transform: scale(1); }
+    .gps-modal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(251,191,36,0.08); border: 2px solid rgba(251,191,36,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .gps-modal-icon i { font-size: 26px; color: var(--warning); animation: gpsPulseWarn 2s ease-in-out infinite; }
+    @keyframes gpsPulseWarn { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.9); } }
+    .gps-modal h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--warning); margin-bottom: 10px; }
+    .gps-modal p { font-size: 13px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 8px; }
+    .gps-modal .gps-steps { text-align: left; background: var(--bg); border-radius: 10px; padding: 12px 14px; margin: 12px 0 18px; border: 1px solid var(--border); }
+    .gps-modal .gps-steps-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-muted); margin-bottom: 8px; }
+    .gps-modal .gps-steps ol { margin: 0; padding: 0 0 0 16px; font-size: 12px; color: var(--fg); line-height: 1.7; }
     .gps-modal .gps-steps ol li strong { color: var(--warning); }
-    .gps-modal-btns {
-      display: flex; gap: 8px;
-    }
-    .gps-modal-btns .btn { flex: 1; justify-content: center; font-size: 13px; padding: 10px 14px; }
-    .btn-modal-cancel {
-      background: var(--bg); color: var(--fg-muted);
-      border: 1.5px solid var(--border);
-    }
-    .btn-modal-cancel:hover { border-color: var(--fg-muted); color: var(--fg); }
-    .btn-modal-retry {
-      background: rgba(251,191,36,0.12); color: var(--warning);
-      border: 1.5px solid rgba(251,191,36,0.3);
-    }
-    .btn-modal-retry:hover {
-      background: rgba(251,191,36,0.2); border-color: var(--warning);
-    }
-
+    .gps-modal-btns { display: flex; gap: 8px; } .gps-modal-btns .btn { flex: 1; justify-content: center; font-size: 13px; padding: 10px 14px; }
+    .btn-modal-cancel { background: var(--bg); color: var(--fg-muted); border: 1.5px solid var(--border); } .btn-modal-cancel:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .btn-modal-retry { background: rgba(251,191,36,0.12); color: var(--warning); border: 1.5px solid rgba(251,191,36,0.3); } .btn-modal-retry:hover { background: rgba(251,191,36,0.2); border-color: var(--warning); }
     .acciones { display: flex; flex-wrap: wrap; gap: 10px; animation: fadeUp 0.45s ease 0.15s both; }
-    #mensaje { margin-top: 16px; font-size: 13px; font-weight: 500; padding: 10px 16px; border-radius: 8px; animation: fadeUp 0.3s ease; min-height: 0; }
+    #mensaje { margin-top: 16px; font-size: 13px; font-weight: 500; padding: 10px 16px; border-radius: 8px; animation: fadeUp 0.3s ease; }
     #mensaje:empty { display: none; }
     #mensaje.ok { background: rgba(52,211,153,0.08); color: var(--success); border: 1px solid rgba(52,211,153,0.15); }
     #mensaje.err { background: rgba(248,113,113,0.08); color: var(--danger); border: 1px solid rgba(248,113,113,0.15); }
     #mensaje.info { background: rgba(96,165,250,0.08); color: var(--info); border: 1px solid rgba(96,165,250,0.15); }
     #mensaje.warn { background: rgba(251,191,36,0.08); color: var(--warning); border: 1px solid rgba(251,191,36,0.15); }
-    .empty-state { text-align: center; padding: 48px 20px; color: var(--fg-muted); }
-    .empty-state i { font-size: 36px; margin-bottom: 14px; opacity: 0.3; display: block; }
-    .empty-state p { font-size: 14px; line-height: 1.6; }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--fg-muted); } .empty-state i { font-size: 36px; margin-bottom: 14px; opacity: 0.3; display: block; } .empty-state p { font-size: 14px; line-height: 1.6; }
     .expired-container { max-width: 520px; margin: auto; position: relative; z-index: 1; animation: fadeUp 0.5s ease; }
-    .expired-card {
-      background: var(--card); border: 1px solid rgba(248,113,113,0.2);
-      border-radius: 20px; padding: 48px 32px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .expired-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: repeating-linear-gradient(-45deg, var(--danger), var(--danger) 8px, transparent 8px, transparent 16px); opacity: 0.7;
-    }
-    .expired-icon {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: rgba(248,113,113,0.06); border: 2px solid rgba(248,113,113,0.15);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px; animation: expiredPulse 3s ease-in-out infinite;
-    }
-    @keyframes expiredPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.12); }
-      50% { box-shadow: 0 0 0 18px rgba(248,113,113,0); }
-    }
+    .expired-card { background: var(--card); border: 1px solid rgba(248,113,113,0.2); border-radius: 20px; padding: 48px 32px; text-align: center; position: relative; overflow: hidden; }
+    .expired-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: repeating-linear-gradient(-45deg, var(--danger), var(--danger) 8px, transparent 8px, transparent 16px); opacity: 0.7; }
+    .expired-icon { width: 80px; height: 80px; border-radius: 50%; background: rgba(248,113,113,0.06); border: 2px solid rgba(248,113,113,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; animation: expiredPulse 3s ease-in-out infinite; }
+    @keyframes expiredPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.12); } 50% { box-shadow: 0 0 0 18px rgba(248,113,113,0); } }
     .expired-icon i { font-size: 30px; color: var(--danger); }
     .expired-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 800; color: var(--danger); margin-bottom: 12px; }
     .expired-card p { font-size: 15px; color: var(--fg-muted); line-height: 1.6; }
     .hidden { display: none !important; }
-    .fdot {
-      position: fixed; width: 2px; height: 2px; background: var(--accent);
-      border-radius: 50%; opacity: 0.12; pointer-events: none; z-index: 0;
-      animation: fDot linear infinite;
-    }
-    @keyframes fDot {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 0.12; } 90% { opacity: 0.12; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-    .toast-guardado {
-      position: fixed; bottom: 32px; left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--card); border: 1.5px solid var(--success);
-      border-radius: 12px; padding: 14px 24px;
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; font-weight: 600; color: var(--success);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(52,211,153,0.1);
-      z-index: 999; opacity: 0; pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .toast-guardado.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-    .toast-guardado i { font-size: 18px; }
+    .fdot { position: fixed; width: 2px; height: 2px; background: var(--accent); border-radius: 50%; opacity: 0.12; pointer-events: none; z-index: 0; animation: fDot linear infinite; }
+    @keyframes fDot { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
+    .toast-guardado { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--card); border: 1.5px solid var(--success); border-radius: 12px; padding: 14px 24px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--success); box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(52,211,153,0.1); z-index: 999; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .toast-guardado.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; } .toast-guardado i { font-size: 18px; }
     @media (max-width: 640px) {
-      body { padding: 16px 10px 40px; }
-      .code-row { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
-      .acciones { flex-direction: column; }
-      th, td { padding: 8px 8px; font-size: 12px; }
-      .tbl-input { font-size: 12px; padding: 8px 10px; height: 38px; }
-      .tbl-input.time { min-width: 100px; }
-      .expired-card { padding: 36px 20px; }
-      .expired-card h2 { font-size: 22px; }
-      .toast-guardado { left: 16px; right: 16px; transform: translateX(0) translateY(20px); }
-      .toast-guardado.visible { transform: translateX(0) translateY(0); }
-      .gps-cell { min-width: 100px; }
-      .btn-gps { font-size: 10px; padding: 5px 9px; }
-      .gps-coords { font-size: 9px; }
-      .gps-error-detail { font-size: 9px; }
-      .gps-modal { padding: 22px 18px; }
-      .gps-modal h3 { font-size: 16px; }
-      .gps-modal p { font-size: 12px; }
-      .gps-modal .gps-steps ol { font-size: 11px; }
+      body { padding: 16px 10px 40px; } .code-row { flex-direction: column; } .btn { width: 100%; justify-content: center; } .acciones { flex-direction: column; }
+      th, td { padding: 8px 8px; font-size: 12px; } .tbl-input { font-size: 12px; padding: 8px 10px; height: 38px; } .tbl-input.time { min-width: 100px; }
+      .expired-card { padding: 36px 20px; } .expired-card h2 { font-size: 22px; }
+      .toast-guardado { left: 16px; right: 16px; transform: translateX(0) translateY(20px); } .toast-guardado.visible { transform: translateX(0) translateY(0); }
+      .gps-cell { min-width: 100px; } .btn-gps { font-size: 10px; padding: 5px 9px; } .gps-coords { font-size: 9px; } .gps-error-detail { font-size: 9px; }
+      .gps-modal { padding: 22px 18px; } .gps-modal h3 { font-size: 16px; }
+      .btn-eliminar-gps { width: 24px; height: 24px; font-size: 9px; }
     }
   </style>
 </head>
 <body>
 
   <script>
-    (function(){
-      for(let i=0;i<8;i++){
-        const d=document.createElement('div');
-        d.classList.add('fdot');
-        d.style.left=Math.random()*100+'%';
-        d.style.animationDuration=(16+Math.random()*14)+'s';
-        d.style.animationDelay=(Math.random()*10)+'s';
-        document.body.appendChild(d);
-      }
-    })();
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12') { e.preventDefault(); return false; }
+      if (e.ctrlKey && e.shiftKey && /I|J|C/i.test(e.key)) { e.preventDefault(); return false; }
+      if (e.ctrlKey && /U|S/i.test(e.key)) { e.preventDefault(); return false; }
+      if (e.metaKey && e.altKey && /I|U|J/i.test(e.key)) { e.preventDefault(); return false; }
+      if (e.metaKey && /S/i.test(e.key)) { e.preventDefault(); return false; }
+    });
+    (function(){ try { console.clear(); } catch(e){} })();
+    (function(){ for(var i=0;i<8;i++){ var d=document.createElement('div'); d.classList.add('fdot'); d.style.left=Math.random()*100+'%'; d.style.animationDuration=(16+Math.random()*14)+'s'; d.style.animationDelay=(Math.random()*10)+'s'; document.body.appendChild(d); } })();
   </script>
 
-  <!-- Modal GPS apagado -->
   <div class="gps-modal-overlay" id="gpsModal">
     <div class="gps-modal">
-      <div class="gps-modal-icon">
-        <i class="fa-solid fa-location-crosshairs"></i>
-      </div>
+      <div class="gps-modal-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
       <h3>La ubicación está desactivada</h3>
-      <p>Parece que el GPS de tu dispositivo está apagado. Actívalo para poder registrar la posición.</p>
-      <div class="gps-steps" id="gpsSteps">
-        <div class="gps-steps-title">Cómo activarlo</div>
-        <ol id="gpsStepsList"></ol>
-      </div>
+      <p>Parece que el GPS está apagado. Actívalo para registrar la posición.</p>
+      <div class="gps-steps"><div class="gps-steps-title">Cómo activarlo</div><ol id="gpsStepsList"></ol></div>
       <div class="gps-modal-btns">
-        <button class="btn btn-modal-cancel" onclick="cerrarModalGPS()">
-          <i class="fa-solid fa-xmark"></i> Cancelar
-        </button>
-        <button class="btn btn-modal-retry" onclick="reintentarDesdeModal()">
-          <i class="fa-solid fa-rotate-right"></i> Reintentar
-        </button>
+        <button class="btn btn-modal-cancel" onclick="cerrarModalGPS()"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+        <button class="btn btn-modal-retry" onclick="reintentarDesdeModal()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
       </div>
     </div>
   </div>
@@ -454,764 +184,301 @@
       <div class="badge"><i class="fa-solid fa-truck-fast"></i> Gestión de entregas</div>
       <h1>* <span>Transporte</span></h1>
     </header>
-
-    <div class="status load" id="estadoServidor">
-      <i class="fa-solid fa-circle-notch"></i>
-      <span>Conectando con el servidor...</span>
-    </div>
-
+    <div class="status load" id="estadoServidor"><i class="fa-solid fa-circle-notch"></i><span>Conectando con el servidor...</span></div>
     <div class="code-section">
-      <div class="code-section-label">
-        <i class="fa-solid fa-key"></i>
-        Introduce tu código de transporte
-      </div>
+      <div class="code-section-label"><i class="fa-solid fa-key"></i> Introduce tu código de transporte</div>
       <div class="code-row">
-        <input type="text" class="code-input" id="codigoTransporteInput"
-          placeholder="Ej: 102" autocomplete="off" spellcheck="false">
-        <button class="btn btn-cargar" id="btnCargar" onclick="filtrarPorCodigo()">
-          <i class="fa-solid fa-magnifying-glass"></i> Cargar datos
-        </button>
+        <input type="text" class="code-input" id="codigoTransporteInput" placeholder="Ej: 102" autocomplete="off" spellcheck="false">
+        <button class="btn btn-cargar" id="btnCargar" onclick="filtrarPorCodigo()"><i class="fa-solid fa-magnifying-glass"></i> Cargar datos</button>
       </div>
     </div>
-
-    <div class="section-title">
-      <i class="fa-solid fa-list-check" style="color:var(--accent);"></i>
-      Clientes asignados
-      <span class="count" id="itemCount">0</span>
-    </div>
-
+    <div class="section-title"><i class="fa-solid fa-list-check" style="color:var(--accent);"></i> Clientes asignados <span class="count" id="itemCount">0</span></div>
     <div class="table-wrap" id="tableWrap">
       <div class="table-scroll">
         <table id="tablaItems">
-          <thead>
-            <tr>
-              <th style="width:44px">#</th>
-              <th><i class="fa-solid fa-box"></i> Nombre</th>
-              <th><i class="fa-solid fa-satellite-dish"></i> GPS</th>
-              <th><i class="fa-solid fa-location-dot"></i> Sector</th>
-              <th><i class="fa-regular fa-clock"></i> Desde</th>
-              <th><i class="fa-regular fa-clock"></i> Hasta</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th style="width:44px">#</th>
+            <th><i class="fa-solid fa-box"></i> Nombre</th>
+            <th><i class="fa-solid fa-satellite-dish"></i> GPS</th>
+            <th><i class="fa-solid fa-location-dot"></i> Sector</th>
+            <th><i class="fa-regular fa-clock"></i> Desde</th>
+            <th><i class="fa-regular fa-clock"></i> Hasta</th>
+          </tr></thead>
           <tbody id="tbodyLineas"></tbody>
         </table>
       </div>
-      <div class="empty-state" id="emptyState">
-        <i class="fa-solid fa-inbox"></i>
-        <p>Escribe un código de transporte<br>para ver los datos asignados.</p>
-      </div>
+      <div class="empty-state" id="emptyState"><i class="fa-solid fa-inbox"></i><p>Escribe un código de transporte<br>para ver los datos asignados.</p></div>
     </div>
-
     <div class="acciones">
-      <button class="btn btn-guardar" id="btnGuardar" onclick="ejecutarGuardado()">
-        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar
-      </button>
+      <button class="btn btn-guardar" id="btnGuardar" onclick="ejecutarGuardado()"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar</button>
     </div>
-
     <div id="mensaje"></div>
   </div>
 
   <div class="expired-container hidden" id="expiredScreen">
     <div class="expired-card">
-      <div class="expired-icon">
-        <i class="fa-solid fa-lock"></i>
-      </div>
+      <div class="expired-icon"><i class="fa-solid fa-lock"></i></div>
       <h2>Formulario no disponible</h2>
-      <p id="mensajeExpiracion">Este formulario ha caducado según la configuración remota.</p>
+      <p id="mensajeExpiracion">Este formulario ha caducado.</p>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
-    const FIREBASE_DB_URL_CONFIG = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/formConfig.json";
-    const FIREBASE_DB_URL_BASE_USADOS = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/codigosUsados";
+    var FIREBASE_DB_URL_CONFIG = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/formConfig.json";
+    var FIREBASE_DB_URL_BASE_USADOS = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/codigosUsados";
+    var allItemsConfig = [];
+    var codigoTransporteActual = '';
+    var itemsOriginalesCargados = [];
+    var botonGPSPendiente = null;
+    var fechaInicioSesion = null;
+    var TIEMPO_LIBERAR_CODIGO_MS = 120 * 60 * 1000;
+    var TIEMPO_RECORDAR_CODIGO_MS = 2 * 60 * 60 * 1000;
+    var LS_KEY = 'transporte_codigo_recordado';
 
-    let allItemsConfig = [];
-    let codigoTransporteActual = '';
-    let itemsOriginalesCargados = [];
-    let botonGPSPendiente = null; // Guarda referencia al botón GPS que activó el modal
+    function guardarCodigoEnDispositivo(codigo) { try { localStorage.setItem(LS_KEY, JSON.stringify({codigo:codigo,timestamp:Date.now()})); } catch(e){} }
+    function obtenerCodigoRecordado() {
+      try { var raw=localStorage.getItem(LS_KEY); if(!raw) return null; var d=JSON.parse(raw); if(!d.codigo||!d.timestamp){localStorage.removeItem(LS_KEY);return null;} if(Date.now()-d.timestamp>TIEMPO_RECORDAR_CODIGO_MS){localStorage.removeItem(LS_KEY);return null;} return {codigo:d.codigo,minutosRestantes:Math.max(0,Math.round((TIEMPO_RECORDAR_CODIGO_MS-(Date.now()-d.timestamp))/60000))}; }
+      catch(e){localStorage.removeItem(LS_KEY);return null;}
+    }
+    function limpiarCodigoRecordado() { try{localStorage.removeItem(LS_KEY);}catch(e){} }
 
-    /* ---------- Utilidades de UI ---------- */
-    function msg(text, type) {
-      const el = document.getElementById('mensaje');
-      el.textContent = text;
-      el.className = type || '';
+    window.addEventListener('beforeunload', function() { if (codigoTransporteActual) guardarEstadoActualEnFirebase(); });
+    function despuesDeCapturarGPS() { guardarEstadoActualEnFirebase(); }
+
+    function guardarEstadoActualEnFirebase() {
+      if (!codigoTransporteActual) return;
+      try { fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigoTransporteActual+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({estado:'en_proceso',fechaInicio:fechaInicioSesion||new Date().toISOString(),datosFormulario:recopilarDatosFormulario()}),keepalive:true}); } catch(e){}
     }
 
-    function status(text, type) {
-      const el = document.getElementById('estadoServidor');
-      const icons = { load: 'fa-circle-notch', ok: 'fa-circle-check', warn: 'fa-triangle-exclamation', err: 'fa-circle-xmark' };
-      el.className = 'status ' + type;
-      el.innerHTML = `<i class="fa-solid ${icons[type] || icons.load}"></i><span>${text}</span>`;
+    function recopilarDatosFormulario() {
+      var filas=document.querySelectorAll('#tbodyLineas tr'), entregas=[];
+      filas.forEach(function(fila){
+        var nombre=fila.querySelector('.item-name-text')?fila.querySelector('.item-name-text').textContent.trim():'';
+        var sector=fila.querySelector('.sector')?fila.querySelector('.sector').value:'';
+        var inicio=fila.querySelector('.inicio')?fila.querySelector('.inicio').value:'';
+        var fin=fila.querySelector('.fin')?fila.querySelector('.fin').value:'';
+        var btnGPS=fila.querySelector('.btn-gps');
+        var gpsLat=btnGPS&&btnGPS.dataset.lat?btnGPS.dataset.lat:null;
+        var gpsLng=btnGPS&&btnGPS.dataset.lng?btnGPS.dataset.lng:null;
+        var gpsAccuracy=btnGPS&&btnGPS.dataset.accuracy?btnGPS.dataset.accuracy:null;
+        var reg={item:nombre,sector:sector,inicio:inicio,fin:fin};
+        if(gpsLat!==null&&gpsLng!==null) reg.gps={lat:parseFloat(gpsLat),lng:parseFloat(gpsLng),accuracy:gpsAccuracy?parseFloat(gpsAccuracy):null,mapsUrl:'https://www.google.com/maps?q='+gpsLat+','+gpsLng};
+        entregas.push(reg);
+      });
+      return entregas;
     }
 
-    function mostrarToast(texto) {
-      const toast = document.getElementById('toastGuardado');
-      document.getElementById('toastTexto').textContent = texto;
-      toast.classList.add('visible');
-      setTimeout(() => toast.classList.remove('visible'), 3000);
-    }
+    function msg(t,type){var e=document.getElementById('mensaje');e.textContent=t;e.className=type||'';}
+    function status(t,type){var e=document.getElementById('estadoServidor'),i={load:'fa-circle-notch',ok:'fa-circle-check',warn:'fa-triangle-exclamation',err:'fa-circle-xmark'};e.className='status '+type;e.innerHTML='<i class="fa-solid '+(i[type]||i.load)+'"></i><span>'+t+'</span>';}
+    function mostrarToast(t){var e=document.getElementById('toastGuardado');document.getElementById('toastTexto').textContent=t;e.classList.add('visible');setTimeout(function(){e.classList.remove('visible');},3000);}
+    function generarOpcionesHorario(){var o='<option value="">--:--</option>';for(var h=4;h<=15;h++)for(var m=0;m<60;m+=30){if(h===15&&m>0)continue;o+='<option value="'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'">'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'</option>';}return o;}
+    var opcionesDeHorario=generarOpcionesHorario();
+    function limpiarHora(s){if(!s)return '';var l=String(s).replace(/[hH]/g,':');if(/^\d{1,2}:$/.test(l))l+='00';return l;}
 
-    function generarOpcionesHorario() {
-      let options = '<option value="">--:--</option>';
-      for (let h = 4; h <= 15; h++) {
-        for (let m = 0; m < 60; m += 30) {
-          if (h === 15 && m > 0) continue;
-          const hh = String(h).padStart(2, '0');
-          const mm = String(m).padStart(2, '0');
-          options += `<option value="${hh}:${mm}">${hh}:${mm}</option>`;
-        }
-      }
-      return options;
-    }
-    const opcionesDeHorario = generarOpcionesHorario();
+    /* ============================================================
+       ELIMINAR UBICACIÓN GPS
+       Resetea el botón, coords, link y datos del GPS
+       ============================================================ */
+    function eliminarGPS(botonEliminar) {
+      var celda = botonEliminar.closest('.gps-cell');
+      var btnGPS = celda.querySelector('.btn-gps');
+      var coordsEl = celda.querySelector('.gps-coords');
+      var linkEl = celda.querySelector('.gps-link');
+      var errorEl = celda.querySelector('.gps-error-detail');
 
-    function limpiarHora(horaStr) {
-      if (!horaStr) return '';
-      let limpia = String(horaStr).replace(/[hH]/g, ':');
-      if (/^\d{1,2}:$/.test(limpia)) limpia += '00';
-      return limpia;
-    }
+      /* Limpiar datos del botón GPS */
+      btnGPS.classList.remove('capturado','error-gps','capturando');
+      btnGPS.innerHTML = '<i class="fa-solid fa-satellite-dish"></i> GPS';
+      delete btnGPS.dataset.lat;
+      delete btnGPS.dataset.lng;
+      delete btnGPS.dataset.accuracy;
 
-    /* ============================================
-       Detección de plataforma para instrucciones
-       ============================================ */
-    function detectarPlataforma() {
-      const ua = navigator.userAgent || '';
-      if (/iPhone|iPad|iPod/.test(ua)) return 'ios';
-      if (/Android/.test(ua)) return 'android';
-      return 'otro';
-    }
-
-    function obtenerPasosActivarGPS() {
-      const plataforma = detectarPlataforma();
-      if (plataforma === 'android') {
-        return [
-          'Desliza la <strong>barra de notificaciones</strong> hacia abajo',
-          'Busca el icono de <strong>Ubicación</strong> o <strong>GPS</strong>',
-          'Tócalo para <strong>activarlo</strong> (se pone azul/encendido)',
-          'Vuelve aquí y presiona <strong>Reintentar</strong>'
-        ];
-      }
-      if (plataforma === 'ios') {
-        return [
-          'Ve a <strong>Ajustes</strong> del iPhone',
-          'Busca <strong>Privacidad y seguridad</strong>',
-          'Toca <strong>Ubicación</strong> y actívala',
-          'Vuelve aquí y presiona <strong>Reintentar</strong>'
-        ];
-      }
-      return [
-        'Activa la <strong>ubicación</strong> en la configuración de tu sistema',
-        'En Windows: Ajustes > Privacidad > Ubicación > Activar',
-        'En Mac: Ajustes del Sistema > Privacidad > Ubicación',
-        'Vuelve aquí y presiona <strong>Reintentar</strong>'
-      ];
-    }
-
-    /* ============================================
-       Modal GPS apagado
-       ============================================ */
-    function abrirModalGPS(boton) {
-      botonGPSPendiente = boton;
-      const pasos = obtenerPasosActivarGPS();
-      const listaEl = document.getElementById('gpsStepsList');
-      listaEl.innerHTML = pasos.map(p => `<li>${p}</li>`).join('');
-      document.getElementById('gpsModal').classList.add('visible');
-    }
-
-    function cerrarModalGPS() {
-      document.getElementById('gpsModal').classList.remove('visible');
-      // Restaurar botón a estado inicial
-      if (botonGPSPendiente) {
-        botonGPSPendiente.classList.remove('capturando');
-        botonGPSPendiente.innerHTML = '<i class="fa-solid fa-satellite-dish"></i> GPS';
-      }
-      botonGPSPendiente = null;
-    }
-
-    function reintentarDesdeModal() {
-      document.getElementById('gpsModal').classList.remove('visible');
-      const boton = botonGPSPendiente;
-      botonGPSPendiente = null;
-      if (boton) {
-        // Pequeña pausa para que el GPS se reactive
-        setTimeout(() => capturarGPS(boton), 500);
-      }
-    }
-
-    /* ============================================
-       Analizar si el error es GPS apagado
-       ============================================ */
-    function esGPSApagado(error) {
-      if (error.code !== error.PERMISSION_DENIED) return false;
-
-      const msg = (error.message || '').toLowerCase();
-
-      // Patrones que indican GPS apagado a nivel del sistema
-      const patronesGPSOff = [
-        'location service is not available',
-        'location services are not available',
-        'location service has been disabled',
-        'location not available',
-        'no location provider',
-        'location provider',
-        'gps not available',
-        'location is not enabled',
-        'location is disabled',
-        'location setting',
-        'network location provider',
-        'location provider at',
-        'only secure origins',
-        'not available on this device',
-        'location access is turned off',
-        'location is turned off',
-        'location services is off',
-        'location service is off'
-      ];
-
-      // Patrones que indican que el usuario negó el permiso del navegador
-      const patronesPermisoDenegado = [
-        'user denied',
-        'denied by user',
-        'permission denied',
-        'user blocked',
-        'access denied',
-        'you have denied access'
-      ];
-
-      // Si contiene "denied" o "user" probablemente es permiso del navegador
-      const esPermiso = patronesPermisoDenegado.some(p => msg.includes(p));
-      if (esPermiso) return false;
-
-      // Si contiene patrones de GPS apagado
-      const esApagado = patronesGPSOff.some(p => msg.includes(p));
-      if (esApagado) return true;
-
-      // Si el mensaje está vacío o genérico y es PERMISSION_DENIED,
-      // en Android suele ser GPS apagado, en iOS puede ser cualquiera
-      // Usamos heurística: si no menciona "user" ni "denied", asumimos GPS apagado
-      if (msg.length === 0 || msg === 'permission denied') {
-        return detectarPlataforma() === 'android';
-      }
-
-      return false;
-    }
-
-    /* ============================================
-       GPS — Captura de ubicación por fila
-       ============================================ */
-    function capturarGPS(boton) {
-      if (boton.classList.contains('capturando')) return;
-
-      const celda = boton.closest('.gps-cell');
-      const coordsEl = celda.querySelector('.gps-coords');
-      const linkEl = celda.querySelector('.gps-link');
-      const errorEl = celda.querySelector('.gps-error-detail');
-
-      boton.classList.remove('capturado', 'error-gps');
-      boton.classList.add('capturando');
-      boton.innerHTML = '<i class="fa-solid fa-circle-notch"></i> Ubicando...';
-      coordsEl.classList.remove('visible', 'capturado');
+      /* Ocultar coordenadas y enlace */
+      coordsEl.classList.remove('visible','capturado');
       coordsEl.innerHTML = '';
       linkEl.classList.remove('visible');
+      linkEl.href = '#';
       errorEl.classList.remove('visible');
       errorEl.innerHTML = '';
 
-      if (!navigator.geolocation) {
-        boton.classList.remove('capturando');
-        boton.classList.add('error-gps');
-        boton.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> No soportado';
-        errorEl.innerHTML = `<div class="gps-error-title no-signal"><i class="fa-solid fa-circle-info"></i> Navegador incompatible</div>Tu navegador no soporta geolocalización. Intenta con Chrome o Safari.`;
-        errorEl.classList.add('visible');
-        return;
-      }
+      /* Ocultar botón eliminar */
+      botonEliminar.classList.remove('visible');
 
-      if (!window.isSecureContext) {
-        boton.classList.remove('capturando');
-        boton.classList.add('error-gps');
-        boton.innerHTML = '<i class="fa-solid fa-lock"></i> Sin HTTPS';
-        errorEl.innerHTML = `<div class="gps-error-title perm-denied"><i class="fa-solid fa-lock"></i> Falta conexión segura</div>La geolocalización requiere <strong>HTTPS</strong>. Abre esta página con <strong>https://</strong> en la dirección.`;
-        errorEl.classList.add('visible');
-        return;
-      }
+      /* Guardar estado actualizado en Firebase */
+      guardarEstadoActualEnFirebase();
+    }
 
+    /* ========== GPS ========== */
+    function detectarPlataforma(){var u=navigator.userAgent||'';if(/iPhone|iPad|iPod/.test(u))return'ios';if(/Android/.test(u))return'android';return'otro';}
+    function obtenerPasosActivarGPS(){var p=detectarPlataforma();if(p==='android')return['Desliza la <strong>barra de notificaciones</strong>','Busca <strong>Ubicación</strong>','Tócalo para <strong>activarlo</strong>','Vuelve y presiona <strong>Reintentar</strong>'];if(p==='ios')return['Ve a <strong>Ajustes</strong>','<strong>Privacidad y seguridad</strong>','<strong>Ubicación</strong> → activar','Vuelve y presiona <strong>Reintentar</strong>'];return['Activa <strong>ubicación</strong>','Vuelve y presiona <strong>Reintentar</strong>'];}
+    function abrirModalGPS(b){botonGPSPendiente=b;document.getElementById('gpsStepsList').innerHTML=obtenerPasosActivarGPS().map(function(s){return'<li>'+s+'</li>';}).join('');document.getElementById('gpsModal').classList.add('visible');}
+    function cerrarModalGPS(){document.getElementById('gpsModal').classList.remove('visible');if(botonGPSPendiente){botonGPSPendiente.classList.remove('capturando');botonGPSPendiente.innerHTML='<i class="fa-solid fa-satellite-dish"></i> GPS';}botonGPSPendiente=null;}
+    function reintentarDesdeModal(){document.getElementById('gpsModal').classList.remove('visible');var b=botonGPSPendiente;botonGPSPendiente=null;if(b)setTimeout(function(){capturarGPS(b);},500);}
+    function esGPSApagado(error){if(error.code!==error.PERMISSION_DENIED)return false;var m=(error.message||'').toLowerCase();if(['user denied','denied by user','permission denied','user blocked','access denied'].some(function(p){return m.includes(p);}))return false;if(['location service is not available','location services are not available','location service has been disabled','location not available','no location provider','location provider','gps not available','location is not enabled','location is disabled','location setting','network location provider','location provider at','not available on this device','location access is turned off','location is turned off','location services is off','location service is off'].some(function(p){return m.includes(p);}))return true;if(m.length===0||m==='permission denied')return detectarPlataforma()==='android';return false;}
+
+    function capturarGPS(boton) {
+      if (boton.classList.contains('capturando')) return;
+      var celda=boton.closest('.gps-cell');
+      var coordsEl=celda.querySelector('.gps-coords'),linkEl=celda.querySelector('.gps-link'),errorEl=celda.querySelector('.gps-error-detail'),btnEliminar=celda.querySelector('.btn-eliminar-gps');
+      boton.classList.remove('capturado','error-gps');boton.classList.add('capturando');
+      boton.innerHTML='<i class="fa-solid fa-circle-notch"></i> Ubicando...';
+      coordsEl.classList.remove('visible','capturado');coordsEl.innerHTML='';
+      linkEl.classList.remove('visible');errorEl.classList.remove('visible');errorEl.innerHTML='';
+      btnEliminar.classList.remove('visible');
+      if(!navigator.geolocation){boton.classList.remove('capturando');boton.classList.add('error-gps');boton.innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> No soportado';errorEl.innerHTML='<div class="gps-error-title no-signal"><i class="fa-solid fa-circle-info"></i> Navegador incompatible</div>';errorEl.classList.add('visible');return;}
+      if(!window.isSecureContext){boton.classList.remove('capturando');boton.classList.add('error-gps');boton.innerHTML='<i class="fa-solid fa-lock"></i> Sin HTTPS';errorEl.innerHTML='<div class="gps-error-title perm-denied"><i class="fa-solid fa-lock"></i> Sin HTTPS</div>';errorEl.classList.add('visible');return;}
       navigator.geolocation.getCurrentPosition(
-        function(posicion) {
-          const lat = posicion.coords.latitude;
-          const lng = posicion.coords.longitude;
-          const precision = posicion.coords.accuracy;
-
-          boton.classList.remove('capturando');
-          boton.classList.add('capturado');
-          boton.innerHTML = '<i class="fa-solid fa-check"></i> GPS OK';
-
-          coordsEl.innerHTML =
-            `<span class="lat-label">Lat:</span>${lat.toFixed(6)} ` +
-            `<span class="lng-label">Lng:</span>${lng.toFixed(6)}` +
-            `<br><span style="opacity:0.55">~${Math.round(precision)}m</span>`;
-          coordsEl.classList.add('visible', 'capturado');
-
-          const mapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
-          linkEl.href = mapsUrl;
-          linkEl.classList.add('visible');
-
-          boton.dataset.lat = lat;
-          boton.dataset.lng = lng;
-          boton.dataset.accuracy = precision;
+        function(pos){
+          boton.classList.remove('capturando');boton.classList.add('capturado');
+          boton.innerHTML='<i class="fa-solid fa-check"></i> GPS OK';
+          coordsEl.innerHTML='<span class="lat-label">Lat:</span>'+pos.coords.latitude.toFixed(6)+' <span class="lng-label">Lng:</span>'+pos.coords.longitude.toFixed(6)+'<br><span style="opacity:0.55">~'+Math.round(pos.coords.accuracy)+'m</span>';
+          coordsEl.classList.add('visible','capturado');
+          linkEl.href='https://www.google.com/maps?q='+pos.coords.latitude+','+pos.coords.longitude;linkEl.classList.add('visible');
+          boton.dataset.lat=pos.coords.latitude;boton.dataset.lng=pos.coords.longitude;boton.dataset.accuracy=pos.coords.accuracy;
+          btnEliminar.classList.add('visible');
+          despuesDeCapturarGPS();
         },
-        function(error) {
+        function(error){
           boton.classList.remove('capturando');
-
-          // Detectar si es GPS apagado vs permiso denegado
-          if (esGPSApagado(error)) {
-            // Mostrar modal con instrucciones para activar GPS
-            boton.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> GPS apagado';
-            abrirModalGPS(boton);
-            return;
+          if(esGPSApagado(error)){boton.innerHTML='<i class="fa-solid fa-location-crosshairs"></i> GPS apagado';abrirModalGPS(boton);return;}
+          boton.classList.add('error-gps');var t='',d='';
+          switch(error.code){
+            case error.PERMISSION_DENIED:t='<i class="fa-solid fa-ban"></i> Permiso denegado';d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-ban"></i> Permiso denegado</div>El navegador bloqueó el acceso.<ul><li>Toca el <strong>candado</strong> junto a la dirección</li><li>Busca <strong>Ubicación</strong> → <strong>Permitir</strong></li><li>Recarga y reintenta</li></ul>';break;
+            case error.POSITION_UNAVAILABLE:t='<i class="fa-solid fa-satellite-dish"></i> Sin señal';d='<div class="gps-error-title no-signal"><i class="fa-solid fa-satellite-dish"></i> Sin señal GPS</div>Verifica GPS y reintenta.';break;
+            case error.TIMEOUT:t='<i class="fa-solid fa-clock"></i> Tiempo agotado';d='<div class="gps-error-title timeout"><i class="fa-solid fa-clock"></i> Tiempo agotado</div>Verifica GPS y reintenta.';break;
+            default:t='<i class="fa-solid fa-xmark"></i> Error';d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-xmark"></i> Error</div>';
           }
-
-          // Resto de errores: mostrar detalle inline
-          boton.classList.add('error-gps');
-          let titulo = '';
-          let detalle = '';
-
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              titulo = '<i class="fa-solid fa-ban"></i> Permiso denegado';
-              detalle =
-                `<div class="gps-error-title perm-denied"><i class="fa-solid fa-ban"></i> Permiso denegado por el navegador</div>` +
-                `El navegador bloqueó el acceso a la ubicación.<br><br>` +
-                `<strong>Para activarlo:</strong>` +
-                `<ul>` +
-                `<li>Toca el <strong>candado</strong> o icono de info junto a la dirección</li>` +
-                `<li>Busca <strong>"Ubicación"</strong> o <strong>"Location"</strong></li>` +
-                `<li>Cámbialo a <strong>"Permitir"</strong></li>` +
-                `<li>Recarga la página y vuelve a intentar</li>` +
-                `</ul>` +
-                `<strong>Android:</strong> Ajustes > Apps > Chrome > Permisos > Ubicación<br>` +
-                `<strong>iPhone:</strong> Ajustes > Safari > Ubicación > Permitir`;
-              break;
-            case error.POSITION_UNAVAILABLE:
-              titulo = '<i class="fa-solid fa-satellite-dish"></i> Sin señal';
-              boton.innerHTML = titulo;
-              detalle =
-                `<div class="gps-error-title no-signal"><i class="fa-solid fa-satellite-dish"></i> Sin señal GPS</div>` +
-                `No se pudo determinar tu posición.` +
-                `<ul>` +
-                `<li>Asegúrate de estar <strong>al aire libre</strong></li>` +
-                `<li>Verifica que el <strong>GPS esté activado</strong></li>` +
-                `<li>Espera unos segundos y vuelve a intentar</li>` +
-                `</ul>`;
-              break;
-            case error.TIMEOUT:
-              titulo = '<i class="fa-solid fa-clock"></i> Tiempo agotado';
-              boton.innerHTML = titulo;
-              detalle =
-                `<div class="gps-error-title timeout"><i class="fa-solid fa-clock"></i> Tiempo agotado</div>` +
-                `Tardó demasiado en obtener la señal GPS.` +
-                `<ul>` +
-                `<li>Verifica que el <strong>GPS esté activado</strong></li>` +
-                `<li>Aléjate de edificios cerrados</li>` +
-                `<li>Vuelve a intentar</li>` +
-                `</ul>`;
-              break;
-            default:
-              titulo = '<i class="fa-solid fa-xmark"></i> Error';
-              boton.innerHTML = titulo;
-              detalle =
-                `<div class="gps-error-title perm-denied"><i class="fa-solid fa-xmark"></i> Error desconocido</div>` +
-                `Ocurrió un error inesperado: ${error.message || 'Sin detalle'}`;
-          }
-
-          boton.innerHTML = titulo;
-          errorEl.innerHTML = detalle;
-          errorEl.classList.add('visible');
-
-          delete boton.dataset.lat;
-          delete boton.dataset.lng;
-          delete boton.dataset.accuracy;
+          boton.innerHTML=t;errorEl.innerHTML=d;errorEl.classList.add('visible');
+          delete boton.dataset.lat;delete boton.dataset.lng;delete boton.dataset.accuracy;
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+        {enableHighAccuracy:true,timeout:20000,maximumAge:0}
       );
     }
 
-    /* ---------- CONFIGURACIÓN REMOTA ---------- */
-    async function cargarConfiguracionRemota() {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
-      try {
-        const response = await fetch(FIREBASE_DB_URL_CONFIG, { signal: controller.signal });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return await response.json();
-      } catch (error) {
-        if (error.name === 'AbortError') throw new Error("Tiempo de espera agotado");
-        throw error;
-      } finally {
-        clearTimeout(timeoutId);
-      }
+    function restaurarGPSenFila(fila,gpsData){
+      if(!gpsData||gpsData.lat===null||gpsData.lng===null)return;
+      var btn=fila.querySelector('.btn-gps'),coordsEl=fila.querySelector('.gps-coords'),linkEl=fila.querySelector('.gps-link'),btnEliminar=fila.querySelector('.btn-eliminar-gps');
+      if(!btn||!coordsEl||!linkEl)return;
+      btn.classList.remove('error-gps');btn.classList.add('capturado');
+      btn.innerHTML='<i class="fa-solid fa-check"></i> GPS OK';
+      btn.dataset.lat=gpsData.lat;btn.dataset.lng=gpsData.lng;btn.dataset.accuracy=gpsData.accuracy||'';
+      coordsEl.innerHTML='<span class="lat-label">Lat:</span>'+gpsData.lat.toFixed(6)+' <span class="lng-label">Lng:</span>'+gpsData.lng.toFixed(6)+'<br><span style="opacity:0.55">~'+Math.round(gpsData.accuracy||0)+'m</span>';
+      coordsEl.classList.add('visible','capturado');
+      linkEl.href='https://www.google.com/maps?q='+gpsData.lat+','+gpsData.lng;linkEl.classList.add('visible');
+      if(btnEliminar)btnEliminar.classList.add('visible');
     }
 
-    function verificarExpiracion(config) {
-      if (!config || !config.expiration) return false;
-      return new Date() > new Date(config.expiration);
+    /* ========== CONFIG ========== */
+    async function cargarConfiguracionRemota(){var c=new AbortController();var t=setTimeout(function(){c.abort();},8000);try{var r=await fetch(FIREBASE_DB_URL_CONFIG,{signal:c.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json();}catch(e){if(e.name==='AbortError')throw new Error('Tiempo agotado');throw e;}finally{clearTimeout(t);}}
+    function verificarExpiracion(c){if(!c||!c.expiration)return false;return new Date()>new Date(c.expiration);}
+
+    async function inicializarApp(){
+      status('Conectando con el servidor...','load');
+      try{
+        var config=await cargarConfiguracionRemota();
+        if(!config)throw new Error('Configuración vacía');
+        if(verificarExpiracion(config)){status('Formulario expirado.','err');document.getElementById('mainContent').classList.add('hidden');document.getElementById('expiredScreen').classList.remove('hidden');document.getElementById('mensajeExpiracion').textContent='Este formulario expiró el '+new Date(config.expiration).toLocaleString()+'.';return;}
+        var raw=config.items&&Array.isArray(config.items)?config.items:[];
+        allItemsConfig=raw.map(function(i){if(typeof i==='string')return{name:i,codigo:'',sector:'',ini:'',fin:''};if(i&&typeof i==='object')return{name:i.name||'',codigo:i.codigo||'',sector:i.sector||'',ini:i.ini||'',fin:i.fin||''};return{name:'',codigo:'',sector:'',ini:'',fin:''};}).filter(function(i){return i.name!=='';});
+        status('Datos. '+allItemsConfig.length+' disponibles.','ok');
+        document.getElementById('mainContent').classList.remove('hidden');document.getElementById('expiredScreen').classList.add('hidden');limpiarTabla();
+        var recordado=obtenerCodigoRecordado();
+        if(recordado){document.getElementById('codigoTransporteInput').value=recordado.codigo;status('Código recordado: '+recordado.codigo.toUpperCase()+' ('+recordado.minutosRestantes+' min)','ok');setTimeout(function(){filtrarPorCodigo();},800);}
+      }catch(e){status('Error: '+e.message,'err');document.getElementById('mainContent').classList.remove('hidden');document.getElementById('expiredScreen').classList.add('hidden');limpiarTabla();}
     }
 
-    async function inicializarApp() {
-      status('Conectando con el servidor...', 'load');
-      try {
-        const config = await cargarConfiguracionRemota();
-        if (!config) throw new Error("Configuración vacía");
-
-        if (verificarExpiracion(config)) {
-          status('Formulario expirado.', 'err');
-          document.getElementById('mainContent').classList.add('hidden');
-          document.getElementById('expiredScreen').classList.remove('hidden');
-          document.getElementById('mensajeExpiracion').textContent = `Este formulario expiró el ${new Date(config.expiration).toLocaleString()}.`;
-          return;
-        }
-
-        const rawItems = config.items && Array.isArray(config.items) ? config.items : [];
-        allItemsConfig = rawItems.map(item => {
-          if (typeof item === 'string') return { name: item, codigo: '', sector: '', ini: '', fin: '' };
-          if (item && typeof item === 'object') return {
-            name: item.name || '', codigo: item.codigo || '',
-            sector: item.sector || '', ini: item.ini || '', fin: item.fin || ''
-          };
-          return { name: '', codigo: '', sector: '', ini: '', fin: '' };
-        }).filter(item => item.name !== '');
-
-        status(`Datos. ${allItemsConfig.length} disponibles.`, 'ok');
-        document.getElementById('mainContent').classList.remove('hidden');
-        document.getElementById('expiredScreen').classList.add('hidden');
-        limpiarTabla();
-      } catch (error) {
-        console.error("Fallo al inicializar:", error);
-        status(`Error: ${error.message}. Revisa reglas de Firebase o internet.`, 'err');
-        document.getElementById('mainContent').classList.remove('hidden');
-        document.getElementById('expiredScreen').classList.add('hidden');
-        limpiarTabla();
-      }
+    async function verificarSiCodigoFueUsado(codigo){
+      try{var r=await fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigo+'.json');if(!r.ok)return{usado:false};var data=await r.json();if(data===null)return{usado:false};if(data.estado==='completado')return{usado:true,razon:'completado'};if(data.estado==='en_proceso'&&data.fechaInicio){var i=new Date(data.fechaInicio).getTime(),t=Date.now()-i;if(t>TIEMPO_LIBERAR_CODIGO_MS)return{usado:false,liberado:true,datosPrevios:data.datosFormulario||null};return{usado:false,puedeContinuar:true,datosPrevios:data.datosFormulario||null,minutosRestantes:Math.max(0,Math.round((TIEMPO_LIBERAR_CODIGO_MS-t)/60000))};}return{usado:true,razon:'desconocido'};}catch(e){return{usado:false};}
     }
 
-    /* ---------- VERIFICAR CÓDIGO USADO ---------- */
-    async function verificarSiCodigoFueUsado(codigo) {
-      try {
-        const response = await fetch(`${FIREBASE_DB_URL_BASE_USADOS}/${codigo}.json`);
-        if (!response.ok) return false;
-        const data = await response.json();
-        return data !== null;
-      } catch (error) {
-        console.error("Error al verificar código:", error);
-        return false;
-      }
+    async function guardarFormularioCompleto(){
+      var filas=document.querySelectorAll('#tbodyLineas tr');if(filas.length===0||!codigoTransporteActual)return false;
+      var entregas=recopilarDatosFormulario();entregas.forEach(function(e){e.fechaCambio=new Date().toISOString();});
+      try{var r=await fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigoTransporteActual+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({estado:'completado',fechaFin:new Date().toISOString(),datosFormulario:entregas})});if(!r.ok)throw new Error('HTTP');return true;}catch(e){return false;}
     }
 
-    /* ---------- MARCAR EN PROCESO ---------- */
-    async function marcarComoEnProceso(codigo) {
-      try {
-        await fetch(`${FIREBASE_DB_URL_BASE_USADOS}/${codigo}.json`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ estado: 'en_proceso', fechaInicio: new Date().toISOString() })
-        });
-      } catch (error) {
-        console.error("Error al marcar en proceso:", error);
-      }
+    async function ejecutarGuardado(){
+      var filas=document.querySelectorAll('#tbodyLineas tr'),btn=document.getElementById('btnGuardar');
+      if(filas.length===0){msg('No hay datos para guardar.','err');return;}
+      if(!codigoTransporteActual){msg('No se ha definido un código.','err');return;}
+      btn.disabled=true;btn.classList.add('guardando');msg('Guardando en el servidor...','info');
+      try{var ok=await guardarFormularioCompleto();if(ok){msg('Código '+codigoTransporteActual+' guardado.','ok');mostrarToast('Código '+codigoTransporteActual+' guardado');limpiarCodigoRecordado();setTimeout(resetearFormulario,1500);}else{msg('Error de red.','err');btn.disabled=false;btn.classList.remove('guardando');}}catch(e){msg('Error inesperado.','err');btn.disabled=false;btn.classList.remove('guardando');}
     }
 
-    /* ---------- GUARDAR EN FIREBASE ---------- */
-    async function guardarFormularioCompleto() {
-      const filas = document.querySelectorAll('#tbodyLineas tr');
-      if (filas.length === 0 || !codigoTransporteActual) return false;
-
-      const entregas = [];
-
-      filas.forEach((fila, index) => {
-        const nombreActual = fila.cells[1].textContent.trim();
-        const sectorActual = fila.querySelector('.sector')?.value || '';
-        const inicioActual = fila.querySelector('.inicio')?.value || '';
-        const finActual = fila.querySelector('.fin')?.value || '';
-
-        const btnGPS = fila.querySelector('.btn-gps');
-        const gpsLat = btnGPS?.dataset.lat || null;
-        const gpsLng = btnGPS?.dataset.lng || null;
-        const gpsAccuracy = btnGPS?.dataset.accuracy || null;
-
-        const original = itemsOriginalesCargados[index] || {};
-        const itemARegistrar = {
-          item: nombreActual,
-          sector: sectorActual,
-          inicio: inicioActual,
-          fin: finActual
-        };
-
-        if (gpsLat !== null && gpsLng !== null) {
-          itemARegistrar.gps = {
-            lat: parseFloat(gpsLat),
-            lng: parseFloat(gpsLng),
-            accuracy: gpsAccuracy ? parseFloat(gpsAccuracy) : null,
-            mapsUrl: `https://www.google.com/maps?q=${gpsLat},${gpsLng}`
-          };
-        }
-
-        if (
-          sectorActual !== (original.sector || '') ||
-          inicioActual !== (original.ini || '') ||
-          finActual !== (original.fin || '') ||
-          gpsLat !== null
-        ) {
-          itemARegistrar.fechaCambio = new Date().toISOString();
-        }
-
-        entregas.push(itemARegistrar);
-      });
-
-      try {
-        const response = await fetch(`${FIREBASE_DB_URL_BASE_USADOS}/${codigoTransporteActual}.json`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            estado: 'completado',
-            fechaFin: new Date().toISOString(),
-            datosFormulario: entregas
-          })
-        });
-        if (!response.ok) throw new Error("Error HTTP");
-        return true;
-      } catch (error) {
-        console.error("Error al guardar:", error);
-        return false;
-      }
+    async function filtrarPorCodigo(){
+      var input=document.getElementById('codigoTransporteInput'),btnCargar=document.getElementById('btnCargar'),codigo=input.value.trim();
+      if(!codigo){msg('Escribe un código.','warn');input.focus();return;}
+      msg('Verificando código...','info');
+      var resultado=await verificarSiCodigoFueUsado(codigo);
+      if(resultado.usado&&resultado.razon==='completado'){msg('El código "'+codigo+'" ya fue guardado.','err');limpiarCodigoRecordado();input.value='';input.focus();return;}
+      if(resultado.usado&&resultado.razon==='desconocido'){msg('Estado inesperado del código.','err');limpiarCodigoRecordado();input.value='';input.focus();return;}
+      codigoTransporteActual=codigo;
+      var itemsFiltrados=allItemsConfig.filter(function(item){return item.codigo.toLowerCase()===codigo.toLowerCase();});
+      var datosPrevios=resultado.datosPrevios||null,esContinuacion=resultado.puedeContinuar===true,esLiberado=resultado.liberado===true;
+      if(esContinuacion)msg('Continuando sesión ('+resultado.minutosRestantes+' min). Datos restaurados.','info');
+      else if(esLiberado){msg('Sesión anterior liberada. Nueva sesión.','warn');datosPrevios=null;}
+      else msg('Mostrando '+itemsFiltrados.length+' ítem(s).','ok');
+      guardarCodigoEnDispositivo(codigo);input.disabled=true;btnCargar.disabled=true;
+      fechaInicioSesion=esContinuacion?null:new Date().toISOString();
+      poblarTabla(itemsFiltrados,datosPrevios);
+      if(!esContinuacion)guardarEstadoActualEnFirebase();
     }
 
-    /* ---------- EJECUTAR GUARDADO ---------- */
-    async function ejecutarGuardado() {
-      const filas = document.querySelectorAll('#tbodyLineas tr');
-      const btnGuardar = document.getElementById('btnGuardar');
+    document.getElementById('codigoTransporteInput').addEventListener('keydown',function(e){if(e.key==='Enter')filtrarPorCodigo();});
+    document.getElementById('tbodyLineas').addEventListener('input',function(e){if(e.target.classList.contains('sector'))e.target.value=e.target.value.toUpperCase();});
 
-      if (filas.length === 0) { msg('No hay datos en la tabla para guardar.', 'err'); return; }
-      if (!codigoTransporteActual) { msg('No se ha definido un código de transporte.', 'err'); return; }
+    function limpiarTabla(){document.getElementById('tbodyLineas').innerHTML='';document.getElementById('itemCount').textContent='0';document.getElementById('emptyState').classList.remove('hidden');document.getElementById('tablaItems').querySelector('thead').style.display='none';itemsOriginalesCargados=[];}
 
-      btnGuardar.disabled = true;
-      btnGuardar.classList.add('guardando');
-      msg('Guardando formulario completo en el servidor...', 'info');
-
-      try {
-        const exito = await guardarFormularioCompleto();
-        if (exito) {
-          msg(`Datos del código ${codigoTransporteActual} guardados con éxito.`, 'ok');
-          mostrarToast(`Código ${codigoTransporteActual} guardado correctamente`);
-          setTimeout(() => resetearFormulario(), 1500);
-        } else {
-          msg('Error de red: No se pudo guardar en el servidor.', 'err');
-          btnGuardar.disabled = false;
-          btnGuardar.classList.remove('guardando');
-        }
-      } catch (error) {
-        console.error('Error inesperado al guardar:', error);
-        msg('Error inesperado al guardar. Intenta de nuevo.', 'err');
-        btnGuardar.disabled = false;
-        btnGuardar.classList.remove('guardando');
-      }
-    }
-
-    /* ---------- FILTRADO ---------- */
-    async function filtrarPorCodigo() {
-      const input = document.getElementById('codigoTransporteInput');
-      const btnCargar = document.getElementById('btnCargar');
-      const codigo = input.value.trim();
-
-      if (!codigo) { msg('Escribe un código de transporte.', 'warn'); input.focus(); return; }
-
-      msg('Verificando estado del código...', 'info');
-      const yaFueUsado = await verificarSiCodigoFueUsado(codigo);
-
-      if (yaFueUsado) {
-        msg(`El código "${codigo}" ya fue utilizado o está en proceso.`, 'err');
-        input.value = '';
-        input.focus();
-        return;
-      }
-
-      codigoTransporteActual = codigo;
-      const itemsFiltrados = allItemsConfig.filter(item => item.codigo.toLowerCase() === codigo.toLowerCase());
-
-      if (itemsFiltrados.length === 0) {
-        msg(`No se encontraron ítems con el código "${codigo}".`, 'err');
-        limpiarTabla();
-        return;
-      }
-
-      input.disabled = true;
-      btnCargar.disabled = true;
-      poblarTabla(itemsFiltrados);
-      msg(`Mostrando ${itemsFiltrados.length} ítem(s). Código bloqueado.`, 'ok');
-      marcarComoEnProceso(codigo);
-    }
-
-    document.getElementById('codigoTransporteInput').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') filtrarPorCodigo();
-    });
-
-    document.getElementById('tbodyLineas').addEventListener('input', function(e) {
-      if (e.target.classList.contains('sector')) {
-        e.target.value = e.target.value.toUpperCase();
-      }
-    });
-
-    function limpiarTabla() {
-      document.getElementById('tbodyLineas').innerHTML = '';
-      document.getElementById('itemCount').textContent = '0';
-      document.getElementById('emptyState').classList.remove('hidden');
-      document.getElementById('tablaItems').querySelector('thead').style.display = 'none';
-      itemsOriginalesCargados = [];
-    }
-
-    function poblarTabla(items) {
-      const tbody = document.getElementById('tbodyLineas');
-      tbody.innerHTML = '';
-      itemsOriginalesCargados = [];
-      let contador = 0;
-      document.getElementById('emptyState').classList.add('hidden');
-      document.getElementById('tablaItems').querySelector('thead').style.display = '';
-
-      items.forEach((item, idx) => {
-        contador++;
-        const fila = document.createElement('tr');
-        fila.style.animation = `fadeUp 0.35s ease ${Math.min(idx * 30, 400)}ms both`;
-
-        const sectorValue = (item.sector || '').toUpperCase().replace(/"/g, '&quot;');
-        const iniValue = limpiarHora(item.ini);
-        const finValue = limpiarHora(item.fin);
-
-        itemsOriginalesCargados.push({
-          name: item.name,
-          sector: item.sector || '',
-          ini: iniValue,
-          fin: finValue
-        });
-
-        fila.innerHTML = `
-          <td><span class="row-num">${contador}</span></td>
-          <td class="item-name">${item.name}</td>
-          <td>
-            <div class="gps-cell">
-              <button type="button" class="btn-gps" onclick="capturarGPS(this)">
-                <i class="fa-solid fa-satellite-dish"></i> GPS
-              </button>
-              <div class="gps-coords"></div>
-              <a class="gps-link" href="#" target="_blank" rel="noopener noreferrer">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Maps
-              </a>
-              <div class="gps-error-detail"></div>
-            </div>
-          </td>
-          <td>
-            <input type="text" class="tbl-input sector" placeholder="Ej: Parque Carcelen" value="${sectorValue}">
-          </td>
-          <td>
-            <select class="tbl-input time inicio">${opcionesDeHorario}</select>
-          </td>
-          <td>
-            <select class="tbl-input time fin">${opcionesDeHorario}</select>
-          </td>
-        `;
+    function poblarTabla(items,datosPrevios){
+      var tbody=document.getElementById('tbodyLineas');tbody.innerHTML='';itemsOriginalesCargados=[];var contador=0;
+      document.getElementById('emptyState').classList.add('hidden');document.getElementById('tablaItems').querySelector('thead').style.display='';
+      items.forEach(function(item,idx){
+        contador++;var fila=document.createElement('tr');fila.style.animation='fadeUp 0.35s ease '+Math.min(idx*30,400)+'ms both';
+        var sectorValue=(item.sector||'').toUpperCase().replace(/"/g,'&quot;'),iniValue=limpiarHora(item.ini),finValue=limpiarHora(item.fin);
+        var datoPrevio=null;
+        if(datosPrevios&&Array.isArray(datosPrevios))datoPrevio=datosPrevios.find(function(d){return d.item&&d.item.toLowerCase()===item.name.toLowerCase();});
+        var sectorR=sectorValue,iniR=iniValue,finR=finValue,gpsR=null;
+        if(datoPrevio){if(datoPrevio.sector)sectorR=datoPrevio.sector.toUpperCase().replace(/"/g,'&quot;');if(datoPrevio.inicio)iniR=datoPrevio.inicio;if(datoPrevio.fin)finR=datoPrevio.fin;if(datoPrevio.gps)gpsR=datoPrevio.gps;}
+        itemsOriginalesCargados.push({name:item.name,sector:item.sector||'',ini:iniValue,fin:finValue});
+        fila.innerHTML=
+          '<td><span class="row-num">'+contador+'</span></td>'+
+          '<td><span class="item-name-text">'+item.name+'</span></td>'+
+          '<td><div class="gps-cell">'+
+            '<div class="gps-botones">'+
+              '<button type="button" class="btn-gps" onclick="capturarGPS(this)"><i class="fa-solid fa-satellite-dish"></i> GPS</button>'+
+              '<button type="button" class="btn-eliminar-gps" onclick="eliminarGPS(this)" title="Eliminar ubicación"><i class="fa-solid fa-xmark"></i></button>'+
+            '</div>'+
+            '<div class="gps-coords"></div>'+
+            '<a class="gps-link" href="#" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Maps</a>'+
+            '<div class="gps-error-detail"></div>'+
+          '</div></td>'+
+          '<td><input type="text" class="tbl-input sector" placeholder="Ej: Parque Carcelen" value="'+sectorR+'"></td>'+
+          '<td><select class="tbl-input time inicio">'+opcionesDeHorario+'</select></td>'+
+          '<td><select class="tbl-input time fin">'+opcionesDeHorario+'</select></td>';
         tbody.appendChild(fila);
-
-        const selectInicio = fila.querySelector('.inicio');
-        const selectFin = fila.querySelector('.fin');
-        if (iniValue) selectInicio.value = iniValue;
-        if (finValue) selectFin.value = finValue;
+        if(iniR)fila.querySelector('.inicio').value=iniR;if(finR)fila.querySelector('.fin').value=finR;
+        if(gpsR)restaurarGPSenFila(fila,gpsR);
       });
-      document.getElementById('itemCount').textContent = contador;
+      document.getElementById('itemCount').textContent=contador;
     }
 
-    function resetearFormulario() {
-      const input = document.getElementById('codigoTransporteInput');
-      const btnGuardar = document.getElementById('btnGuardar');
-      const mensaje = document.getElementById('mensaje');
-
-      codigoTransporteActual = '';
-      input.value = '';
-      input.disabled = false;
-      document.getElementById('btnCargar').disabled = false;
-      btnGuardar.disabled = false;
-      btnGuardar.classList.remove('guardando');
-
-      limpiarTabla();
-      mensaje.textContent = '';
-      mensaje.className = '';
-      input.focus();
+    function resetearFormulario(){
+      var input=document.getElementById('codigoTransporteInput');codigoTransporteActual='';fechaInicioSesion=null;
+      input.value='';input.disabled=false;document.getElementById('btnCargar').disabled=false;
+      document.getElementById('btnGuardar').disabled=false;document.getElementById('btnGuardar').classList.remove('guardando');
+      limpiarTabla();document.getElementById('mensaje').textContent='';document.getElementById('mensaje').className='';input.focus();
     }
 
-    /* ---------- CSV ---------- */
-    function generarCSVBlob() {
-      const filas = document.querySelectorAll('#tbodyLineas tr');
-      if (filas.length === 0) return null;
-      let csv = "#,Nombre,Sector,Desde,Hasta,Latitud,Longitud,Precisión(m),Maps\n";
-      filas.forEach(fila => {
-        const num    = fila.cells[0].textContent.trim();
-        const nombre = fila.cells[1].textContent.trim();
-        const sector = fila.querySelector('.sector')?.value || '';
-        const inicio = fila.querySelector('.inicio')?.value || '';
-        const fin    = fila.querySelector('.fin')?.value || '';
-        const btnGPS = fila.querySelector('.btn-gps');
-        const lat = btnGPS?.dataset.lat || '';
-        const lng = btnGPS?.dataset.lng || '';
-        const acc = btnGPS?.dataset.accuracy || '';
-        const mapsUrl = (lat && lng) ? `https://www.google.com/maps?q=${lat},${lng}` : '';
-        const esc = s => `"${s.replace(/"/g, '""')}"`;
-        csv += `${num},${esc(nombre)},${esc(sector)},${inicio},${fin},${lat},${lng},${acc},${esc(mapsUrl)}\n`;
-      });
-      return new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    function generarCSVBlob(){
+      var filas=document.querySelectorAll('#tbodyLineas tr');if(filas.length===0)return null;
+      var csv='#,Nombre,Sector,Desde,Hasta,Latitud,Longitud,Precisión(m),Maps\n';
+      filas.forEach(function(f){var n=f.querySelector('.item-name-text')?f.querySelector('.item-name-text').textContent.trim():'';var s=f.querySelector('.sector')?f.querySelector('.sector').value:'';var i=f.querySelector('.inicio')?f.querySelector('.inicio').value:'';var fi=f.querySelector('.fin')?f.querySelector('.fin').value:'';var b=f.querySelector('.btn-gps');var lat=b&&b.dataset.lat?b.dataset.lat:'';var lng=b&&b.dataset.lng?b.dataset.lng:'';var acc=b&&b.dataset.accuracy?b.dataset.accuracy:'';var mu=(lat&&lng)?'https://www.google.com/maps?q='+lat+','+lng:'';var esc=function(x){return '"'+(x||'').replace(/"/g,'""')+'"';};csv+=f.cells[0].textContent.trim()+','+esc(n)+','+esc(s)+','+i+','+fi+','+lat+','+lng+','+acc+','+esc(mu)+'\n';});
+      return new Blob([csv],{type:'text/csv;charset=utf-8;'});
     }
 
-    function descargarCSV() {
-      const blob = generarCSVBlob();
-      if (!blob) { msg('No hay datos para descargar.', 'err'); return; }
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'entregas.csv';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    /* ---------- COMPARTIR ---------- */
-    async function compartirCSV() {
-      const blob = generarCSVBlob();
-      if (!blob) { msg('No hay datos para compartir.', 'err'); return; }
-      const file = new File([blob], 'entregas.csv', { type: 'text/csv' });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            title: 'Lista de entregas',
-            text: `Entregas para código ${codigoTransporteActual}`,
-            files: [file]
-          });
-          resetearFormulario();
-        } catch (error) {
-          if (error.name !== 'AbortError') {
-            console.error('Error al compartir:', error);
-            msg('No se pudo compartir. Descargando como respaldo...', 'warn');
-            descargarCSV();
-          } else {
-            msg('Compartir cancelado por el usuario.', 'info');
-          }
-        }
-      } else {
-        msg('Este navegador no permite compartir archivos. Descargando...', 'warn');
-        descargarCSV();
-      }
-    }
-
-    // Cerrar modal con clic en overlay
-    document.getElementById('gpsModal').addEventListener('click', function(e) {
-      if (e.target === this) cerrarModalGPS();
-    });
-
-    window.addEventListener('DOMContentLoaded', inicializarApp);
+    document.getElementById('gpsModal').addEventListener('click',function(e){if(e.target===this)cerrarModalGPS();});
+    window.addEventListener('DOMContentLoaded',inicializarApp);
   </script>
 </body>
 </html>
