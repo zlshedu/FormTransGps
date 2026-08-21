@@ -47,6 +47,14 @@
     .btn-guardar.guardando { pointer-events: none; opacity: 0.7; } .btn-guardar.guardando i { animation: spin 0.8s linear infinite; }
     .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--fg); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .section-title .count { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px; background: var(--accent-glow); border: 1px solid rgba(232,145,58,0.2); color: var(--accent); font-size: 12px; font-weight: 700; }
+    /* Indicador de inactividad */
+    .inactividad-bar { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 8px; font-size: 11px; font-weight: 600; margin-bottom: 16px; animation: fadeUp 0.3s ease; }
+    .inactividad-bar.ok { background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.15); color: var(--success); }
+    .inactividad-bar.warn { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.15); color: var(--warning); animation: inactPulse 2s ease-in-out infinite; }
+    .inactividad-bar.danger { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.15); color: var(--danger); animation: inactPulse 1.5s ease-in-out infinite; }
+    @keyframes inactPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .inactividad-bar i { font-size: 12px; }
+    .inactividad-bar .inact-time { font-family: 'Space Grotesk', monospace; font-weight: 700; }
     .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 24px; animation: fadeUp 0.45s ease 0.1s both; }
     .table-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 700px; }
@@ -62,31 +70,16 @@
     .tbl-input.time { min-width: 120px; cursor: pointer; } .tbl-input.sector { text-transform: uppercase; }
     select.tbl-input { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237b829a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 30px; }
     select.tbl-input option { background: var(--bg-surface); color: var(--fg); }
-
     .gps-cell { display: flex; flex-direction: column; gap: 5px; min-width: 120px; }
-    .gps-botones { display: flex; align-items: center; gap: 5px; }
+    .gps-btn-row { display: flex; align-items: center; gap: 5px; }
     .btn-gps { display: inline-flex; align-items: center; gap: 5px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 11px; padding: 6px 12px; border-radius: 7px; border: 1.5px solid rgba(96,165,250,0.25); background: rgba(96,165,250,0.08); color: var(--info); cursor: pointer; transition: all 0.25s ease; white-space: nowrap; width: fit-content; }
     .btn-gps:hover { background: rgba(96,165,250,0.18); border-color: var(--info); transform: translateY(-1px); box-shadow: 0 3px 12px rgba(96,165,250,0.15); } .btn-gps:active { transform: scale(0.95); }
     .btn-gps.capturando { pointer-events: none; opacity: 0.65; } .btn-gps.capturando i { animation: spin 1s linear infinite; }
     .btn-gps.capturado { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); color: var(--success); cursor: pointer; } .btn-gps.capturado:hover { background: rgba(52,211,153,0.15); border-color: var(--success); }
     .btn-gps.error-gps { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.08); color: var(--danger); }
-
-    /* Botón X para eliminar ubicación */
-    .btn-eliminar-gps {
-      display: none; align-items: center; justify-content: center;
-      width: 26px; height: 26px; border-radius: 6px;
-      border: 1.5px solid rgba(248,113,113,0.2);
-      background: rgba(248,113,113,0.06);
-      color: var(--danger); cursor: pointer;
-      transition: all 0.2s ease; font-size: 10px; flex-shrink: 0;
-    }
-    .btn-eliminar-gps:hover {
-      background: rgba(248,113,113,0.15); border-color: var(--danger);
-      transform: scale(1.1);
-    }
-    .btn-eliminar-gps:active { transform: scale(0.9); }
-    .btn-eliminar-gps.visible { display: inline-flex; }
-
+    .btn-gps-eliminar { display: none; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 5px; border: 1px solid rgba(248,113,113,0.25); background: rgba(248,113,113,0.06); color: var(--danger); cursor: pointer; transition: all 0.2s ease; font-size: 9px; flex-shrink: 0; }
+    .btn-gps-eliminar:hover { background: rgba(248,113,113,0.18); border-color: var(--danger); transform: scale(1.15); }
+    .gps-btn-row.tiene-gps .btn-gps-eliminar { display: inline-flex; }
     .gps-coords { font-family: 'Space Grotesk', monospace; font-size: 10px; color: var(--fg-muted); line-height: 1.4; padding: 4px 7px; background: var(--bg); border-radius: 5px; border: 1px solid var(--border); word-break: break-all; display: none; }
     .gps-coords.visible { display: block; animation: fadeUp 0.3s ease; }
     .gps-coords .lat-label, .gps-coords .lng-label { color: var(--info); font-weight: 600; }
@@ -142,7 +135,6 @@
       .toast-guardado { left: 16px; right: 16px; transform: translateX(0) translateY(20px); } .toast-guardado.visible { transform: translateX(0) translateY(0); }
       .gps-cell { min-width: 100px; } .btn-gps { font-size: 10px; padding: 5px 9px; } .gps-coords { font-size: 9px; } .gps-error-detail { font-size: 9px; }
       .gps-modal { padding: 22px 18px; } .gps-modal h3 { font-size: 16px; }
-      .btn-eliminar-gps { width: 24px; height: 24px; font-size: 9px; }
     }
   </style>
 </head>
@@ -192,6 +184,11 @@
         <button class="btn btn-cargar" id="btnCargar" onclick="filtrarPorCodigo()"><i class="fa-solid fa-magnifying-glass"></i> Cargar datos</button>
       </div>
     </div>
+    <div class="inactividad-bar hidden" id="inactividadBar">
+      <i class="fa-solid fa-clock"></i>
+      <span>Sesión activa — </span>
+      <span class="inact-time" id="inactTime">60:00</span>
+    </div>
     <div class="section-title"><i class="fa-solid fa-list-check" style="color:var(--accent);"></i> Clientes asignados <span class="count" id="itemCount">0</span></div>
     <div class="table-wrap" id="tableWrap">
       <div class="table-scroll">
@@ -227,258 +224,515 @@
   <script>
     var FIREBASE_DB_URL_CONFIG = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/formConfig.json";
     var FIREBASE_DB_URL_BASE_USADOS = "https://datos-formulario-f3cde-default-rtdb.firebaseio.com/codigosUsados";
+
     var allItemsConfig = [];
     var codigoTransporteActual = '';
     var itemsOriginalesCargados = [];
     var botonGPSPendiente = null;
     var fechaInicioSesion = null;
+    var timerInactividad = null;
+
+    /* 120 min Firebase liberación */
     var TIEMPO_LIBERAR_CODIGO_MS = 120 * 60 * 1000;
-    var TIEMPO_RECORDAR_CODIGO_MS = 2 * 60 * 60 * 1000;
-    var LS_KEY = 'transporte_codigo_recordado';
+    /* 60 min inactividad → resetear */
+    var INACTIVIDAD_RESET_MS = 60 * 60 * 1000;
+    /* 120 min inactividad → bloquear */
+    var INACTIVIDAD_BLOQUEO_MS = 120 * 60 * 1000;
+    var LS_KEY = 'transporte_sesion';
 
-    function guardarCodigoEnDispositivo(codigo) { try { localStorage.setItem(LS_KEY, JSON.stringify({codigo:codigo,timestamp:Date.now()})); } catch(e){} }
-    function obtenerCodigoRecordado() {
-      try { var raw=localStorage.getItem(LS_KEY); if(!raw) return null; var d=JSON.parse(raw); if(!d.codigo||!d.timestamp){localStorage.removeItem(LS_KEY);return null;} if(Date.now()-d.timestamp>TIEMPO_RECORDAR_CODIGO_MS){localStorage.removeItem(LS_KEY);return null;} return {codigo:d.codigo,minutosRestantes:Math.max(0,Math.round((TIEMPO_RECORDAR_CODIGO_MS-(Date.now()-d.timestamp))/60000))}; }
-      catch(e){localStorage.removeItem(LS_KEY);return null;}
+    /* ============================================================
+       LOCALSTORAGE — Sesión con timestamp de actividad
+       ============================================================ */
+    function guardarSesionEnDispositivo(codigo) {
+      try { localStorage.setItem(LS_KEY, JSON.stringify({ codigo: codigo, ultimaActividad: Date.now() })); } catch(e) {}
     }
-    function limpiarCodigoRecordado() { try{localStorage.removeItem(LS_KEY);}catch(e){} }
+    function actualizarActividadEnDispositivo() {
+      if (!codigoTransporteActual) return;
+      try {
+        var raw = localStorage.getItem(LS_KEY);
+        if (raw) { var d = JSON.parse(raw); if (d.codigo === codigoTransporteActual) { d.ultimaActividad = Date.now(); localStorage.setItem(LS_KEY, JSON.stringify(d)); } }
+      } catch(e) {}
+    }
+    function obtenerSesionRecordada() {
+      try {
+        var raw = localStorage.getItem(LS_KEY);
+        if (!raw) return null;
+        var d = JSON.parse(raw);
+        if (!d.codigo || !d.ultimaActividad) { localStorage.removeItem(LS_KEY); return null; }
+        var inactividad = Date.now() - d.ultimaActividad;
+        if (inactividad > INACTIVIDAD_BLOQUEO_MS) { localStorage.removeItem(LS_KEY); return null; }
+        return { codigo: d.codigo, ultimaActividad: d.ultimaActividad, inactividadMs: inactividad };
+      } catch(e) { localStorage.removeItem(LS_KEY); return null; }
+    }
+    function limpiarSesionDispositivo() {
+      try { localStorage.removeItem(LS_KEY); } catch(e) {}
+      detenerTimerInactividad();
+    }
 
-    window.addEventListener('beforeunload', function() { if (codigoTransporteActual) guardarEstadoActualEnFirebase(); });
-    function despuesDeCapturarGPS() { guardarEstadoActualEnFirebase(); }
+    /* ============================================================
+       TIMER DE INACTIVIDAD — verifica cada 15 segundos
+       ============================================================ */
+    function iniciarTimerInactividad() {
+      detenerTimerInactividad();
+      timerInactividad = setInterval(verificarInactividad, 15000);
+      verificarInactividad(); // Verificar inmediato
+    }
+    function detenerTimerInactividad() {
+      if (timerInactividad) { clearInterval(timerInactividad); timerInactividad = null; }
+      document.getElementById('inactividadBar').classList.add('hidden');
+    }
+    function verificarInactividad() {
+      if (!codigoTransporteActual) { detenerTimerInactividad(); return; }
+      var sesion = obtenerSesionRecordada();
+      if (!sesion) { forzarResetPorInactividad('bloqueo'); return; }
+      var inactividad = sesion.inactividadMs;
+      var barra = document.getElementById('inactividadBar');
+      var tiempoEl = document.getElementById('inactTime');
 
+      if (inactividad >= INACTIVIDAD_BLOQUEO_MS) {
+        forzarResetPorInactividad('bloqueo');
+        return;
+      }
+      if (inactividad >= INACTIVIDAD_RESET_MS) {
+        forzarResetPorInactividad('reset');
+        return;
+      }
+
+      /* Calcular tiempo restante hasta reset (60 min) */
+      var restanteReset = INACTIVIDAD_RESET_MS - inactividad;
+      var minR = Math.floor(restanteReset / 60000);
+      var segR = Math.floor((restanteReset % 60000) / 1000);
+      tiempoEl.textContent = String(minR).padStart(2,'0') + ':' + String(segR).padStart(2,'0');
+
+      barra.classList.remove('hidden', 'ok', 'warn', 'danger');
+      if (restanteReset < 10 * 60 * 1000) {
+        barra.classList.add('danger');
+        barra.querySelector('i').className = 'fa-solid fa-triangle-exclamation';
+        barra.querySelector('span').textContent = 'Inactividad — se cerrará en ';
+      } else if (restanteReset < 20 * 60 * 1000) {
+        barra.classList.add('warn');
+        barra.querySelector('i').className = 'fa-solid fa-clock';
+        barra.querySelector('span').textContent = 'Inactividad — se cerrará en ';
+      } else {
+        barra.classList.add('ok');
+        barra.querySelector('i').className = 'fa-solid fa-circle-check';
+        barra.querySelector('span').textContent = 'Sesión activa — ';
+      }
+    }
+
+    function forzarResetPorInactividad(tipo) {
+      detenerTimerInactividad();
+      var codigoPrevio = codigoTransporteActual;
+      resetearFormulario();
+      if (tipo === 'bloqueo') {
+        msg('Sesión expirada por inactividad (2 horas sin actividad). El código "' + codigoPrevio + '" se ha bloqueado.', 'err');
+      } else {
+        msg('Sesión cerrada por inactividad (60 min). Vuelve a ingresar el código "' + codigoPrevio + '".', 'warn');
+      }
+    }
+
+    /* Detectar actividad del usuario */
+    document.addEventListener('input', function(e) {
+      if (!codigoTransporteActual) return;
+      if (e.target.closest('#codigoTransporteInput')) return;
+      actualizarActividadEnDispositivo();
+    });
+    document.addEventListener('click', function(e) {
+      if (!codigoTransporteActual) return;
+      if (e.target.closest('#btnCargar') || e.target.closest('#btnGuardar')) return;
+      actualizarActividadEnDispositivo();
+    });
+
+    /* ============================================================
+       GUARDADO AUTOMÁTICO AL CERRAR PÁGINA
+       ============================================================ */
+    window.addEventListener('beforeunload', function() {
+      if (codigoTransporteActual) guardarEstadoActualEnFirebase();
+    });
+    function despuesDeCapturarGPS() {
+      actualizarActividadEnDispositivo();
+      guardarEstadoActualEnFirebase();
+    }
     function guardarEstadoActualEnFirebase() {
       if (!codigoTransporteActual) return;
-      try { fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigoTransporteActual+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({estado:'en_proceso',fechaInicio:fechaInicioSesion||new Date().toISOString(),datosFormulario:recopilarDatosFormulario()}),keepalive:true}); } catch(e){}
+      var datos = recopilarDatosFormulario();
+      try {
+        fetch(FIREBASE_DB_URL_BASE_USADOS + '/' + codigoTransporteActual + '.json', {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ estado: 'en_proceso', fechaInicio: fechaInicioSesion || new Date().toISOString(), datosFormulario: datos }),
+          keepalive: true
+        });
+      } catch(e) {}
     }
-
     function recopilarDatosFormulario() {
-      var filas=document.querySelectorAll('#tbodyLineas tr'), entregas=[];
-      filas.forEach(function(fila){
-        var nombre=fila.querySelector('.item-name-text')?fila.querySelector('.item-name-text').textContent.trim():'';
-        var sector=fila.querySelector('.sector')?fila.querySelector('.sector').value:'';
-        var inicio=fila.querySelector('.inicio')?fila.querySelector('.inicio').value:'';
-        var fin=fila.querySelector('.fin')?fila.querySelector('.fin').value:'';
-        var btnGPS=fila.querySelector('.btn-gps');
-        var gpsLat=btnGPS&&btnGPS.dataset.lat?btnGPS.dataset.lat:null;
-        var gpsLng=btnGPS&&btnGPS.dataset.lng?btnGPS.dataset.lng:null;
-        var gpsAccuracy=btnGPS&&btnGPS.dataset.accuracy?btnGPS.dataset.accuracy:null;
-        var reg={item:nombre,sector:sector,inicio:inicio,fin:fin};
-        if(gpsLat!==null&&gpsLng!==null) reg.gps={lat:parseFloat(gpsLat),lng:parseFloat(gpsLng),accuracy:gpsAccuracy?parseFloat(gpsAccuracy):null,mapsUrl:'https://www.google.com/maps?q='+gpsLat+','+gpsLng};
+      var filas = document.querySelectorAll('#tbodyLineas tr');
+      var entregas = [];
+      filas.forEach(function(fila) {
+        var nombre = fila.querySelector('.item-name-text') ? fila.querySelector('.item-name-text').textContent.trim() : '';
+        var sector = fila.querySelector('.sector') ? fila.querySelector('.sector').value : '';
+        var inicio = fila.querySelector('.inicio') ? fila.querySelector('.inicio').value : '';
+        var fin = fila.querySelector('.fin') ? fila.querySelector('.fin').value : '';
+        var btnGPS = fila.querySelector('.btn-gps');
+        var gpsLat = btnGPS && btnGPS.dataset.lat ? btnGPS.dataset.lat : null;
+        var gpsLng = btnGPS && btnGPS.dataset.lng ? btnGPS.dataset.lng : null;
+        var gpsAccuracy = btnGPS && btnGPS.dataset.accuracy ? btnGPS.dataset.accuracy : null;
+        var reg = { item: nombre, sector: sector, inicio: inicio, fin: fin };
+        if (gpsLat !== null && gpsLng !== null) {
+          reg.gps = { lat: parseFloat(gpsLat), lng: parseFloat(gpsLng), accuracy: gpsAccuracy ? parseFloat(gpsAccuracy) : null, mapsUrl: 'https://www.google.com/maps?q=' + gpsLat + ',' + gpsLng };
+        }
         entregas.push(reg);
       });
       return entregas;
     }
 
-    function msg(t,type){var e=document.getElementById('mensaje');e.textContent=t;e.className=type||'';}
-    function status(t,type){var e=document.getElementById('estadoServidor'),i={load:'fa-circle-notch',ok:'fa-circle-check',warn:'fa-triangle-exclamation',err:'fa-circle-xmark'};e.className='status '+type;e.innerHTML='<i class="fa-solid '+(i[type]||i.load)+'"></i><span>'+t+'</span>';}
-    function mostrarToast(t){var e=document.getElementById('toastGuardado');document.getElementById('toastTexto').textContent=t;e.classList.add('visible');setTimeout(function(){e.classList.remove('visible');},3000);}
-    function generarOpcionesHorario(){var o='<option value="">--:--</option>';for(var h=4;h<=15;h++)for(var m=0;m<60;m+=30){if(h===15&&m>0)continue;o+='<option value="'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'">'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'</option>';}return o;}
-    var opcionesDeHorario=generarOpcionesHorario();
-    function limpiarHora(s){if(!s)return '';var l=String(s).replace(/[hH]/g,':');if(/^\d{1,2}:$/.test(l))l+='00';return l;}
+    /* ========== UI ========== */
+    function msg(text, type) { var el = document.getElementById('mensaje'); el.textContent = text; el.className = type || ''; }
+    function status(text, type) {
+      var el = document.getElementById('estadoServidor');
+      var icons = { load: 'fa-circle-notch', ok: 'fa-circle-check', warn: 'fa-triangle-exclamation', err: 'fa-circle-xmark' };
+      el.className = 'status ' + type;
+      el.innerHTML = '<i class="fa-solid ' + (icons[type] || icons.load) + '"></i><span>' + text + '</span>';
+    }
+    function mostrarToast(texto) {
+      var t = document.getElementById('toastGuardado');
+      document.getElementById('toastTexto').textContent = texto;
+      t.classList.add('visible');
+      setTimeout(function() { t.classList.remove('visible'); }, 3000);
+    }
+    function generarOpcionesHorario() {
+      var o = '<option value="">--:--</option>';
+      for (var h = 4; h <= 15; h++) for (var m = 0; m < 60; m += 30) { if (h === 15 && m > 0) continue; o += '<option value="'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'">'+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+'</option>'; }
+      return o;
+    }
+    var opcionesDeHorario = generarOpcionesHorario();
+    function limpiarHora(s) { if (!s) return ''; var l = String(s).replace(/[hH]/g,':'); if (/^\d{1,2}:$/.test(l)) l += '00'; return l; }
 
-    /* ============================================================
-       ELIMINAR UBICACIÓN GPS
-       Resetea el botón, coords, link y datos del GPS
-       ============================================================ */
+    /* ========== ELIMINAR GPS ========== */
     function eliminarGPS(botonEliminar) {
+      var fila = botonEliminar.closest('tr');
       var celda = botonEliminar.closest('.gps-cell');
       var btnGPS = celda.querySelector('.btn-gps');
       var coordsEl = celda.querySelector('.gps-coords');
       var linkEl = celda.querySelector('.gps-link');
       var errorEl = celda.querySelector('.gps-error-detail');
+      var btnRow = celda.querySelector('.gps-btn-row');
 
-      /* Limpiar datos del botón GPS */
-      btnGPS.classList.remove('capturado','error-gps','capturando');
+      /* Limpiar todo */
+      btnGPS.classList.remove('capturado', 'error-gps', 'capturando');
       btnGPS.innerHTML = '<i class="fa-solid fa-satellite-dish"></i> GPS';
       delete btnGPS.dataset.lat;
       delete btnGPS.dataset.lng;
       delete btnGPS.dataset.accuracy;
-
-      /* Ocultar coordenadas y enlace */
-      coordsEl.classList.remove('visible','capturado');
+      coordsEl.classList.remove('visible', 'capturado');
       coordsEl.innerHTML = '';
       linkEl.classList.remove('visible');
-      linkEl.href = '#';
       errorEl.classList.remove('visible');
       errorEl.innerHTML = '';
+      btnRow.classList.remove('tiene-gps');
 
-      /* Ocultar botón eliminar */
-      botonEliminar.classList.remove('visible');
-
-      /* Guardar estado actualizado en Firebase */
+      /* Guardar estado sin GPS */
       guardarEstadoActualEnFirebase();
+      actualizarActividadEnDispositivo();
     }
 
     /* ========== GPS ========== */
-    function detectarPlataforma(){var u=navigator.userAgent||'';if(/iPhone|iPad|iPod/.test(u))return'ios';if(/Android/.test(u))return'android';return'otro';}
-    function obtenerPasosActivarGPS(){var p=detectarPlataforma();if(p==='android')return['Desliza la <strong>barra de notificaciones</strong>','Busca <strong>Ubicación</strong>','Tócalo para <strong>activarlo</strong>','Vuelve y presiona <strong>Reintentar</strong>'];if(p==='ios')return['Ve a <strong>Ajustes</strong>','<strong>Privacidad y seguridad</strong>','<strong>Ubicación</strong> → activar','Vuelve y presiona <strong>Reintentar</strong>'];return['Activa <strong>ubicación</strong>','Vuelve y presiona <strong>Reintentar</strong>'];}
-    function abrirModalGPS(b){botonGPSPendiente=b;document.getElementById('gpsStepsList').innerHTML=obtenerPasosActivarGPS().map(function(s){return'<li>'+s+'</li>';}).join('');document.getElementById('gpsModal').classList.add('visible');}
-    function cerrarModalGPS(){document.getElementById('gpsModal').classList.remove('visible');if(botonGPSPendiente){botonGPSPendiente.classList.remove('capturando');botonGPSPendiente.innerHTML='<i class="fa-solid fa-satellite-dish"></i> GPS';}botonGPSPendiente=null;}
-    function reintentarDesdeModal(){document.getElementById('gpsModal').classList.remove('visible');var b=botonGPSPendiente;botonGPSPendiente=null;if(b)setTimeout(function(){capturarGPS(b);},500);}
-    function esGPSApagado(error){if(error.code!==error.PERMISSION_DENIED)return false;var m=(error.message||'').toLowerCase();if(['user denied','denied by user','permission denied','user blocked','access denied'].some(function(p){return m.includes(p);}))return false;if(['location service is not available','location services are not available','location service has been disabled','location not available','no location provider','location provider','gps not available','location is not enabled','location is disabled','location setting','network location provider','location provider at','not available on this device','location access is turned off','location is turned off','location services is off','location service is off'].some(function(p){return m.includes(p);}))return true;if(m.length===0||m==='permission denied')return detectarPlataforma()==='android';return false;}
-
+    function detectarPlataforma() { var u = navigator.userAgent || ''; if (/iPhone|iPad|iPod/.test(u)) return 'ios'; if (/Android/.test(u)) return 'android'; return 'otro'; }
+    function obtenerPasosActivarGPS() {
+      var p = detectarPlataforma();
+      if (p === 'android') return ['Desliza la <strong>barra de notificaciones</strong>','Busca <strong>Ubicación</strong>','Tócalo para <strong>activarlo</strong>','Vuelve y presiona <strong>Reintentar</strong>'];
+      if (p === 'ios') return ['Ve a <strong>Ajustes</strong>','<strong>Privacidad y seguridad</strong>','<strong>Ubicación</strong> → activar','Vuelve y presiona <strong>Reintentar</strong>'];
+      return ['Activa <strong>ubicación</strong> en configuración','Vuelve y presiona <strong>Reintentar</strong>'];
+    }
+    function abrirModalGPS(b) { botonGPSPendiente = b; document.getElementById('gpsStepsList').innerHTML = obtenerPasosActivarGPS().map(function(s){return '<li>'+s+'</li>';}).join(''); document.getElementById('gpsModal').classList.add('visible'); }
+    function cerrarModalGPS() { document.getElementById('gpsModal').classList.remove('visible'); if (botonGPSPendiente) { botonGPSPendiente.classList.remove('capturando'); botonGPSPendiente.innerHTML = '<i class="fa-solid fa-satellite-dish"></i> GPS'; } botonGPSPendiente = null; }
+    function reintentarDesdeModal() { document.getElementById('gpsModal').classList.remove('visible'); var b = botonGPSPendiente; botonGPSPendiente = null; if (b) setTimeout(function(){capturarGPS(b);}, 500); }
+    function esGPSApagado(error) {
+      if (error.code !== error.PERMISSION_DENIED) return false;
+      var m = (error.message || '').toLowerCase();
+      if (['user denied','denied by user','permission denied','user blocked','access denied'].some(function(p){return m.includes(p);})) return false;
+      if (['location service is not available','location services are not available','location service has been disabled','location not available','no location provider','location provider','gps not available','location is not enabled','location is disabled','location setting','network location provider','location provider at','not available on this device','location access is turned off','location is turned off','location services is off','location service is off'].some(function(p){return m.includes(p);})) return true;
+      if (m.length === 0 || m === 'permission denied') return detectarPlataforma() === 'android';
+      return false;
+    }
     function capturarGPS(boton) {
       if (boton.classList.contains('capturando')) return;
-      var celda=boton.closest('.gps-cell');
-      var coordsEl=celda.querySelector('.gps-coords'),linkEl=celda.querySelector('.gps-link'),errorEl=celda.querySelector('.gps-error-detail'),btnEliminar=celda.querySelector('.btn-eliminar-gps');
-      boton.classList.remove('capturado','error-gps');boton.classList.add('capturando');
-      boton.innerHTML='<i class="fa-solid fa-circle-notch"></i> Ubicando...';
-      coordsEl.classList.remove('visible','capturado');coordsEl.innerHTML='';
-      linkEl.classList.remove('visible');errorEl.classList.remove('visible');errorEl.innerHTML='';
-      btnEliminar.classList.remove('visible');
-      if(!navigator.geolocation){boton.classList.remove('capturando');boton.classList.add('error-gps');boton.innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> No soportado';errorEl.innerHTML='<div class="gps-error-title no-signal"><i class="fa-solid fa-circle-info"></i> Navegador incompatible</div>';errorEl.classList.add('visible');return;}
-      if(!window.isSecureContext){boton.classList.remove('capturando');boton.classList.add('error-gps');boton.innerHTML='<i class="fa-solid fa-lock"></i> Sin HTTPS';errorEl.innerHTML='<div class="gps-error-title perm-denied"><i class="fa-solid fa-lock"></i> Sin HTTPS</div>';errorEl.classList.add('visible');return;}
+      var celda = boton.closest('.gps-cell');
+      var coordsEl = celda.querySelector('.gps-coords'), linkEl = celda.querySelector('.gps-link'), errorEl = celda.querySelector('.gps-error-detail');
+      boton.classList.remove('capturado','error-gps'); boton.classList.add('capturando');
+      boton.innerHTML = '<i class="fa-solid fa-circle-notch"></i> Ubicando...';
+      coordsEl.classList.remove('visible','capturado'); coordsEl.innerHTML = '';
+      linkEl.classList.remove('visible'); errorEl.classList.remove('visible'); errorEl.innerHTML = '';
+      if (!navigator.geolocation) { boton.classList.remove('capturando'); boton.classList.add('error-gps'); boton.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> No soportado'; errorEl.innerHTML = '<div class="gps-error-title no-signal"><i class="fa-solid fa-circle-info"></i> Navegador incompatible</div>'; errorEl.classList.add('visible'); return; }
+      if (!window.isSecureContext) { boton.classList.remove('capturando'); boton.classList.add('error-gps'); boton.innerHTML = '<i class="fa-solid fa-lock"></i> Sin HTTPS'; errorEl.innerHTML = '<div class="gps-error-title perm-denied"><i class="fa-solid fa-lock"></i> Sin HTTPS</div>'; errorEl.classList.add('visible'); return; }
       navigator.geolocation.getCurrentPosition(
-        function(pos){
-          boton.classList.remove('capturando');boton.classList.add('capturado');
-          boton.innerHTML='<i class="fa-solid fa-check"></i> GPS OK';
-          coordsEl.innerHTML='<span class="lat-label">Lat:</span>'+pos.coords.latitude.toFixed(6)+' <span class="lng-label">Lng:</span>'+pos.coords.longitude.toFixed(6)+'<br><span style="opacity:0.55">~'+Math.round(pos.coords.accuracy)+'m</span>';
+        function(pos) {
+          boton.classList.remove('capturando'); boton.classList.add('capturado');
+          boton.innerHTML = '<i class="fa-solid fa-check"></i> GPS OK';
+          coordsEl.innerHTML = '<span class="lat-label">Lat:</span>'+pos.coords.latitude.toFixed(6)+' <span class="lng-label">Lng:</span>'+pos.coords.longitude.toFixed(6)+'<br><span style="opacity:0.55">~'+Math.round(pos.coords.accuracy)+'m</span>';
           coordsEl.classList.add('visible','capturado');
-          linkEl.href='https://www.google.com/maps?q='+pos.coords.latitude+','+pos.coords.longitude;linkEl.classList.add('visible');
-          boton.dataset.lat=pos.coords.latitude;boton.dataset.lng=pos.coords.longitude;boton.dataset.accuracy=pos.coords.accuracy;
-          btnEliminar.classList.add('visible');
+          linkEl.href = 'https://www.google.com/maps?q='+pos.coords.latitude+','+pos.coords.longitude; linkEl.classList.add('visible');
+          boton.dataset.lat = pos.coords.latitude; boton.dataset.lng = pos.coords.longitude; boton.dataset.accuracy = pos.coords.accuracy;
+          /* Mostrar botón eliminar */
+          celda.querySelector('.gps-btn-row').classList.add('tiene-gps');
           despuesDeCapturarGPS();
         },
-        function(error){
+        function(error) {
           boton.classList.remove('capturando');
-          if(esGPSApagado(error)){boton.innerHTML='<i class="fa-solid fa-location-crosshairs"></i> GPS apagado';abrirModalGPS(boton);return;}
-          boton.classList.add('error-gps');var t='',d='';
-          switch(error.code){
-            case error.PERMISSION_DENIED:t='<i class="fa-solid fa-ban"></i> Permiso denegado';d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-ban"></i> Permiso denegado</div>El navegador bloqueó el acceso.<ul><li>Toca el <strong>candado</strong> junto a la dirección</li><li>Busca <strong>Ubicación</strong> → <strong>Permitir</strong></li><li>Recarga y reintenta</li></ul>';break;
-            case error.POSITION_UNAVAILABLE:t='<i class="fa-solid fa-satellite-dish"></i> Sin señal';d='<div class="gps-error-title no-signal"><i class="fa-solid fa-satellite-dish"></i> Sin señal GPS</div>Verifica GPS y reintenta.';break;
-            case error.TIMEOUT:t='<i class="fa-solid fa-clock"></i> Tiempo agotado';d='<div class="gps-error-title timeout"><i class="fa-solid fa-clock"></i> Tiempo agotado</div>Verifica GPS y reintenta.';break;
-            default:t='<i class="fa-solid fa-xmark"></i> Error';d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-xmark"></i> Error</div>';
+          if (esGPSApagado(error)) { boton.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> GPS apagado'; abrirModalGPS(boton); return; }
+          boton.classList.add('error-gps'); var t='',d='';
+          switch(error.code) {
+            case error.PERMISSION_DENIED: t='<i class="fa-solid fa-ban"></i> Permiso denegado'; d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-ban"></i> Permiso denegado</div>El navegador bloqueó el acceso.<ul><li>Toca el <strong>candado</strong> junto a la dirección</li><li>Busca <strong>Ubicación</strong> → <strong>Permitir</strong></li><li>Recarga y reintenta</li></ul>'; break;
+            case error.POSITION_UNAVAILABLE: t='<i class="fa-solid fa-satellite-dish"></i> Sin señal'; d='<div class="gps-error-title no-signal"><i class="fa-solid fa-satellite-dish"></i> Sin señal GPS</div>Verifica GPS y reintenta.'; break;
+            case error.TIMEOUT: t='<i class="fa-solid fa-clock"></i> Tiempo agotado'; d='<div class="gps-error-title timeout"><i class="fa-solid fa-clock"></i> Tiempo agotado</div>Verifica GPS y reintenta.'; break;
+            default: t='<i class="fa-solid fa-xmark"></i> Error'; d='<div class="gps-error-title perm-denied"><i class="fa-solid fa-xmark"></i> Error</div>';
           }
-          boton.innerHTML=t;errorEl.innerHTML=d;errorEl.classList.add('visible');
-          delete boton.dataset.lat;delete boton.dataset.lng;delete boton.dataset.accuracy;
+          boton.innerHTML=t; errorEl.innerHTML=d; errorEl.classList.add('visible');
+          delete boton.dataset.lat; delete boton.dataset.lng; delete boton.dataset.accuracy;
         },
-        {enableHighAccuracy:true,timeout:20000,maximumAge:0}
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
       );
     }
-
-    function restaurarGPSenFila(fila,gpsData){
-      if(!gpsData||gpsData.lat===null||gpsData.lng===null)return;
-      var btn=fila.querySelector('.btn-gps'),coordsEl=fila.querySelector('.gps-coords'),linkEl=fila.querySelector('.gps-link'),btnEliminar=fila.querySelector('.btn-eliminar-gps');
-      if(!btn||!coordsEl||!linkEl)return;
-      btn.classList.remove('error-gps');btn.classList.add('capturado');
-      btn.innerHTML='<i class="fa-solid fa-check"></i> GPS OK';
-      btn.dataset.lat=gpsData.lat;btn.dataset.lng=gpsData.lng;btn.dataset.accuracy=gpsData.accuracy||'';
-      coordsEl.innerHTML='<span class="lat-label">Lat:</span>'+gpsData.lat.toFixed(6)+' <span class="lng-label">Lng:</span>'+gpsData.lng.toFixed(6)+'<br><span style="opacity:0.55">~'+Math.round(gpsData.accuracy||0)+'m</span>';
-      coordsEl.classList.add('visible','capturado');
-      linkEl.href='https://www.google.com/maps?q='+gpsData.lat+','+gpsData.lng;linkEl.classList.add('visible');
-      if(btnEliminar)btnEliminar.classList.add('visible');
+    function restaurarGPSenFila(fila, gpsData) {
+      if (!gpsData || gpsData.lat === null || gpsData.lng === null) return;
+      var btn = fila.querySelector('.btn-gps');
+      var coordsEl = fila.querySelector('.gps-coords');
+      var linkEl = fila.querySelector('.gps-link');
+      var btnRow = fila.querySelector('.gps-btn-row');
+      if (!btn || !coordsEl || !linkEl) return;
+      btn.classList.remove('error-gps'); btn.classList.add('capturado');
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> GPS OK';
+      btn.dataset.lat = gpsData.lat; btn.dataset.lng = gpsData.lng; btn.dataset.accuracy = gpsData.accuracy || '';
+      coordsEl.innerHTML = '<span class="lat-label">Lat:</span>' + gpsData.lat.toFixed(6) + ' <span class="lng-label">Lng:</span>' + gpsData.lng.toFixed(6) + '<br><span style="opacity:0.55">~' + Math.round(gpsData.accuracy || 0) + 'm</span>';
+      coordsEl.classList.add('visible', 'capturado');
+      linkEl.href = 'https://www.google.com/maps?q=' + gpsData.lat + ',' + gpsData.lng;
+      linkEl.classList.add('visible');
+      btnRow.classList.add('tiene-gps');
     }
 
-    /* ========== CONFIG ========== */
-    async function cargarConfiguracionRemota(){var c=new AbortController();var t=setTimeout(function(){c.abort();},8000);try{var r=await fetch(FIREBASE_DB_URL_CONFIG,{signal:c.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json();}catch(e){if(e.name==='AbortError')throw new Error('Tiempo agotado');throw e;}finally{clearTimeout(t);}}
-    function verificarExpiracion(c){if(!c||!c.expiration)return false;return new Date()>new Date(c.expiration);}
+    /* ========== CONFIG REMOTA ========== */
+    async function cargarConfiguracionRemota() {
+      var c = new AbortController(); var t = setTimeout(function(){c.abort();}, 8000);
+      try { var r = await fetch(FIREBASE_DB_URL_CONFIG, {signal:c.signal}); if (!r.ok) throw new Error('HTTP '+r.status); return await r.json(); }
+      catch(e) { if (e.name==='AbortError') throw new Error('Tiempo agotado'); throw e; } finally { clearTimeout(t); }
+    }
+    function verificarExpiracion(c) { if (!c||!c.expiration) return false; return new Date()>new Date(c.expiration); }
 
-    async function inicializarApp(){
+    async function inicializarApp() {
       status('Conectando con el servidor...','load');
-      try{
-        var config=await cargarConfiguracionRemota();
-        if(!config)throw new Error('Configuración vacía');
-        if(verificarExpiracion(config)){status('Formulario expirado.','err');document.getElementById('mainContent').classList.add('hidden');document.getElementById('expiredScreen').classList.remove('hidden');document.getElementById('mensajeExpiracion').textContent='Este formulario expiró el '+new Date(config.expiration).toLocaleString()+'.';return;}
-        var raw=config.items&&Array.isArray(config.items)?config.items:[];
-        allItemsConfig=raw.map(function(i){if(typeof i==='string')return{name:i,codigo:'',sector:'',ini:'',fin:''};if(i&&typeof i==='object')return{name:i.name||'',codigo:i.codigo||'',sector:i.sector||'',ini:i.ini||'',fin:i.fin||''};return{name:'',codigo:'',sector:'',ini:'',fin:''};}).filter(function(i){return i.name!=='';});
-        status('Datos. '+allItemsConfig.length+' disponibles.','ok');
-        document.getElementById('mainContent').classList.remove('hidden');document.getElementById('expiredScreen').classList.add('hidden');limpiarTabla();
-        var recordado=obtenerCodigoRecordado();
-        if(recordado){document.getElementById('codigoTransporteInput').value=recordado.codigo;status('Código recordado: '+recordado.codigo.toUpperCase()+' ('+recordado.minutosRestantes+' min)','ok');setTimeout(function(){filtrarPorCodigo();},800);}
-      }catch(e){status('Error: '+e.message,'err');document.getElementById('mainContent').classList.remove('hidden');document.getElementById('expiredScreen').classList.add('hidden');limpiarTabla();}
+      try {
+        var config = await cargarConfiguracionRemota();
+        if (!config) throw new Error('Configuración vacía');
+        if (verificarExpiracion(config)) {
+          status('Formulario expirado.','err');
+          document.getElementById('mainContent').classList.add('hidden');
+          document.getElementById('expiredScreen').classList.remove('hidden');
+          document.getElementById('mensajeExpiracion').textContent = 'Este formulario expiró el ' + new Date(config.expiration).toLocaleString() + '.';
+          return;
+        }
+        var raw = config.items && Array.isArray(config.items) ? config.items : [];
+        allItemsConfig = raw.map(function(i) {
+          if (typeof i === 'string') return {name:i,codigo:'',sector:'',ini:'',fin:''};
+          if (i && typeof i === 'object') return {name:i.name||'',codigo:i.codigo||'',sector:i.sector||'',ini:i.ini||'',fin:i.fin||''};
+          return {name:'',codigo:'',sector:'',ini:'',fin:''};
+        }).filter(function(i){return i.name !== '';});
+        status('Datos. ' + allItemsConfig.length + ' disponibles.', 'ok');
+        document.getElementById('mainContent').classList.remove('hidden');
+        document.getElementById('expiredScreen').classList.add('hidden');
+        limpiarTabla();
+
+        /* Verificar sesión recordada */
+        var recordado = obtenerSesionRecordada();
+        if (recordado) {
+          document.getElementById('codigoTransporteInput').value = recordado.codigo;
+          status('Sesión anterior recuperada: ' + recordado.codigo.toUpperCase(), 'ok');
+          setTimeout(function() { filtrarPorCodigo(); }, 800);
+        }
+      } catch(e) {
+        status('Error: ' + e.message, 'err');
+        document.getElementById('mainContent').classList.remove('hidden');
+        document.getElementById('expiredScreen').classList.add('hidden');
+        limpiarTabla();
+      }
     }
 
-    async function verificarSiCodigoFueUsado(codigo){
-      try{var r=await fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigo+'.json');if(!r.ok)return{usado:false};var data=await r.json();if(data===null)return{usado:false};if(data.estado==='completado')return{usado:true,razon:'completado'};if(data.estado==='en_proceso'&&data.fechaInicio){var i=new Date(data.fechaInicio).getTime(),t=Date.now()-i;if(t>TIEMPO_LIBERAR_CODIGO_MS)return{usado:false,liberado:true,datosPrevios:data.datosFormulario||null};return{usado:false,puedeContinuar:true,datosPrevios:data.datosFormulario||null,minutosRestantes:Math.max(0,Math.round((TIEMPO_LIBERAR_CODIGO_MS-t)/60000))};}return{usado:true,razon:'desconocido'};}catch(e){return{usado:false};}
+    /* ========== VERIFICAR CÓDIGO ========== */
+    async function verificarSiCodigoFueUsado(codigo) {
+      try {
+        var r = await fetch(FIREBASE_DB_URL_BASE_USADOS + '/' + codigo + '.json');
+        if (!r.ok) return { usado: false };
+        var data = await r.json();
+        if (data === null) return { usado: false };
+        if (data.estado === 'completado') return { usado: true, razon: 'completado' };
+        if (data.estado === 'en_proceso' && data.fechaInicio) {
+          var inicio = new Date(data.fechaInicio).getTime();
+          var transcurrido = Date.now() - inicio;
+          if (transcurrido > TIEMPO_LIBERAR_CODIGO_MS) {
+            return { usado: false, liberado: true, datosPrevios: data.datosFormulario || null };
+          }
+          return { usado: false, puedeContinuar: true, datosPrevios: data.datosFormulario || null };
+        }
+        return { usado: true, razon: 'desconocido' };
+      } catch(e) { return { usado: false }; }
     }
 
-    async function guardarFormularioCompleto(){
-      var filas=document.querySelectorAll('#tbodyLineas tr');if(filas.length===0||!codigoTransporteActual)return false;
-      var entregas=recopilarDatosFormulario();entregas.forEach(function(e){e.fechaCambio=new Date().toISOString();});
-      try{var r=await fetch(FIREBASE_DB_URL_BASE_USADOS+'/'+codigoTransporteActual+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({estado:'completado',fechaFin:new Date().toISOString(),datosFormulario:entregas})});if(!r.ok)throw new Error('HTTP');return true;}catch(e){return false;}
+    /* ========== GUARDAR ========== */
+    async function guardarFormularioCompleto() {
+      var filas = document.querySelectorAll('#tbodyLineas tr');
+      if (filas.length === 0 || !codigoTransporteActual) return false;
+      var entregas = recopilarDatosFormulario();
+      entregas.forEach(function(e) { e.fechaCambio = new Date().toISOString(); });
+      try {
+        var r = await fetch(FIREBASE_DB_URL_BASE_USADOS + '/' + codigoTransporteActual + '.json', {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ estado: 'completado', fechaFin: new Date().toISOString(), datosFormulario: entregas })
+        });
+        if (!r.ok) throw new Error('HTTP'); return true;
+      } catch(e) { return false; }
+    }
+    async function ejecutarGuardado() {
+      var filas = document.querySelectorAll('#tbodyLineas tr');
+      var btn = document.getElementById('btnGuardar');
+      if (filas.length === 0) { msg('No hay datos para guardar.','err'); return; }
+      if (!codigoTransporteActual) { msg('No se ha definido un código.','err'); return; }
+      btn.disabled = true; btn.classList.add('guardando');
+      msg('Guardando en el servidor...','info');
+      try {
+        var ok = await guardarFormularioCompleto();
+        if (ok) {
+          msg('Código ' + codigoTransporteActual + ' guardado con éxito.', 'ok');
+          mostrarToast('Código ' + codigoTransporteActual + ' guardado');
+          limpiarSesionDispositivo();
+          setTimeout(resetearFormulario, 1500);
+        } else { msg('Error de red al guardar.','err'); btn.disabled=false; btn.classList.remove('guardando'); }
+      } catch(e) { msg('Error inesperado.','err'); btn.disabled=false; btn.classList.remove('guardando'); }
     }
 
-    async function ejecutarGuardado(){
-      var filas=document.querySelectorAll('#tbodyLineas tr'),btn=document.getElementById('btnGuardar');
-      if(filas.length===0){msg('No hay datos para guardar.','err');return;}
-      if(!codigoTransporteActual){msg('No se ha definido un código.','err');return;}
-      btn.disabled=true;btn.classList.add('guardando');msg('Guardando en el servidor...','info');
-      try{var ok=await guardarFormularioCompleto();if(ok){msg('Código '+codigoTransporteActual+' guardado.','ok');mostrarToast('Código '+codigoTransporteActual+' guardado');limpiarCodigoRecordado();setTimeout(resetearFormulario,1500);}else{msg('Error de red.','err');btn.disabled=false;btn.classList.remove('guardando');}}catch(e){msg('Error inesperado.','err');btn.disabled=false;btn.classList.remove('guardando');}
+    /* ========== FILTRADO ========== */
+    async function filtrarPorCodigo() {
+      var input = document.getElementById('codigoTransporteInput');
+      var btnCargar = document.getElementById('btnCargar');
+      var codigo = input.value.trim();
+      if (!codigo) { msg('Escribe un código de transporte.','warn'); input.focus(); return; }
+      msg('Verificando estado del código...','info');
+      var resultado = await verificarSiCodigoFueUsado(codigo);
+      if (resultado.usado && resultado.razon === 'completado') {
+        msg('El código "' + codigo + '" ya fue guardado correctamente.','err');
+        limpiarSesionDispositivo(); input.value = ''; input.focus(); return;
+      }
+      if (resultado.usado && resultado.razon === 'desconocido') {
+        msg('El código "' + codigo + '" tiene estado inesperado.','err');
+        limpiarSesionDispositivo(); input.value = ''; input.focus(); return;
+      }
+      codigoTransporteActual = codigo;
+      var itemsFiltrados = allItemsConfig.filter(function(item) { return item.codigo.toLowerCase() === codigo.toLowerCase(); });
+      var datosPrevios = resultado.datosPrevios || null;
+      var esContinuacion = resultado.puedeContinuar === true;
+      var esLiberado = resultado.liberado === true;
+      if (esContinuacion) msg('Continuando sesión. Datos restaurados.', 'info');
+      else if (esLiberado) { msg('Sesión anterior liberada. Iniciando nueva.', 'warn'); datosPrevios = null; }
+      else msg('Mostrando ' + itemsFiltrados.length + ' ítem(s).', 'ok');
+
+      guardarSesionEnDispositivo(codigo);
+      input.disabled = true; btnCargar.disabled = true;
+      fechaInicioSesion = esContinuacion ? null : new Date().toISOString();
+      poblarTabla(itemsFiltrados, datosPrevios);
+      if (!esContinuacion) guardarEstadoActualEnFirebase();
+      iniciarTimerInactividad();
     }
 
-    async function filtrarPorCodigo(){
-      var input=document.getElementById('codigoTransporteInput'),btnCargar=document.getElementById('btnCargar'),codigo=input.value.trim();
-      if(!codigo){msg('Escribe un código.','warn');input.focus();return;}
-      msg('Verificando código...','info');
-      var resultado=await verificarSiCodigoFueUsado(codigo);
-      if(resultado.usado&&resultado.razon==='completado'){msg('El código "'+codigo+'" ya fue guardado.','err');limpiarCodigoRecordado();input.value='';input.focus();return;}
-      if(resultado.usado&&resultado.razon==='desconocido'){msg('Estado inesperado del código.','err');limpiarCodigoRecordado();input.value='';input.focus();return;}
-      codigoTransporteActual=codigo;
-      var itemsFiltrados=allItemsConfig.filter(function(item){return item.codigo.toLowerCase()===codigo.toLowerCase();});
-      var datosPrevios=resultado.datosPrevios||null,esContinuacion=resultado.puedeContinuar===true,esLiberado=resultado.liberado===true;
-      if(esContinuacion)msg('Continuando sesión ('+resultado.minutosRestantes+' min). Datos restaurados.','info');
-      else if(esLiberado){msg('Sesión anterior liberada. Nueva sesión.','warn');datosPrevios=null;}
-      else msg('Mostrando '+itemsFiltrados.length+' ítem(s).','ok');
-      guardarCodigoEnDispositivo(codigo);input.disabled=true;btnCargar.disabled=true;
-      fechaInicioSesion=esContinuacion?null:new Date().toISOString();
-      poblarTabla(itemsFiltrados,datosPrevios);
-      if(!esContinuacion)guardarEstadoActualEnFirebase();
+    document.getElementById('codigoTransporteInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') filtrarPorCodigo(); });
+    document.getElementById('tbodyLineas').addEventListener('input', function(e) { if (e.target.classList.contains('sector')) e.target.value = e.target.value.toUpperCase(); });
+
+    function limpiarTabla() {
+      document.getElementById('tbodyLineas').innerHTML = '';
+      document.getElementById('itemCount').textContent = '0';
+      document.getElementById('emptyState').classList.remove('hidden');
+      document.getElementById('tablaItems').querySelector('thead').style.display = 'none';
+      itemsOriginalesCargados = [];
     }
-
-    document.getElementById('codigoTransporteInput').addEventListener('keydown',function(e){if(e.key==='Enter')filtrarPorCodigo();});
-    document.getElementById('tbodyLineas').addEventListener('input',function(e){if(e.target.classList.contains('sector'))e.target.value=e.target.value.toUpperCase();});
-
-    function limpiarTabla(){document.getElementById('tbodyLineas').innerHTML='';document.getElementById('itemCount').textContent='0';document.getElementById('emptyState').classList.remove('hidden');document.getElementById('tablaItems').querySelector('thead').style.display='none';itemsOriginalesCargados=[];}
-
-    function poblarTabla(items,datosPrevios){
-      var tbody=document.getElementById('tbodyLineas');tbody.innerHTML='';itemsOriginalesCargados=[];var contador=0;
-      document.getElementById('emptyState').classList.add('hidden');document.getElementById('tablaItems').querySelector('thead').style.display='';
-      items.forEach(function(item,idx){
-        contador++;var fila=document.createElement('tr');fila.style.animation='fadeUp 0.35s ease '+Math.min(idx*30,400)+'ms both';
-        var sectorValue=(item.sector||'').toUpperCase().replace(/"/g,'&quot;'),iniValue=limpiarHora(item.ini),finValue=limpiarHora(item.fin);
-        var datoPrevio=null;
-        if(datosPrevios&&Array.isArray(datosPrevios))datoPrevio=datosPrevios.find(function(d){return d.item&&d.item.toLowerCase()===item.name.toLowerCase();});
-        var sectorR=sectorValue,iniR=iniValue,finR=finValue,gpsR=null;
-        if(datoPrevio){if(datoPrevio.sector)sectorR=datoPrevio.sector.toUpperCase().replace(/"/g,'&quot;');if(datoPrevio.inicio)iniR=datoPrevio.inicio;if(datoPrevio.fin)finR=datoPrevio.fin;if(datoPrevio.gps)gpsR=datoPrevio.gps;}
-        itemsOriginalesCargados.push({name:item.name,sector:item.sector||'',ini:iniValue,fin:finValue});
-        fila.innerHTML=
-          '<td><span class="row-num">'+contador+'</span></td>'+
-          '<td><span class="item-name-text">'+item.name+'</span></td>'+
-          '<td><div class="gps-cell">'+
-            '<div class="gps-botones">'+
-              '<button type="button" class="btn-gps" onclick="capturarGPS(this)"><i class="fa-solid fa-satellite-dish"></i> GPS</button>'+
-              '<button type="button" class="btn-eliminar-gps" onclick="eliminarGPS(this)" title="Eliminar ubicación"><i class="fa-solid fa-xmark"></i></button>'+
-            '</div>'+
-            '<div class="gps-coords"></div>'+
-            '<a class="gps-link" href="#" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Maps</a>'+
-            '<div class="gps-error-detail"></div>'+
-          '</div></td>'+
-          '<td><input type="text" class="tbl-input sector" placeholder="Ej: Parque Carcelen" value="'+sectorR+'"></td>'+
-          '<td><select class="tbl-input time inicio">'+opcionesDeHorario+'</select></td>'+
-          '<td><select class="tbl-input time fin">'+opcionesDeHorario+'</select></td>';
+    function poblarTabla(items, datosPrevios) {
+      var tbody = document.getElementById('tbodyLineas');
+      tbody.innerHTML = '';
+      itemsOriginalesCargados = [];
+      var contador = 0;
+      document.getElementById('emptyState').classList.add('hidden');
+      document.getElementById('tablaItems').querySelector('thead').style.display = '';
+      items.forEach(function(item, idx) {
+        contador++;
+        var fila = document.createElement('tr');
+        fila.style.animation = 'fadeUp 0.35s ease ' + Math.min(idx * 30, 400) + 'ms both';
+        var sectorValue = (item.sector || '').toUpperCase().replace(/"/g, '&quot;');
+        var iniValue = limpiarHora(item.ini);
+        var finValue = limpiarHora(item.fin);
+        var datoPrevio = null;
+        if (datosPrevios && Array.isArray(datosPrevios)) {
+          datoPrevio = datosPrevios.find(function(d) { return d.item && d.item.toLowerCase() === item.name.toLowerCase(); });
+        }
+        var sectorR = sectorValue, iniR = iniValue, finR = finValue, gpsR = null;
+        if (datoPrevio) {
+          if (datoPrevio.sector) sectorR = datoPrevio.sector.toUpperCase().replace(/"/g, '&quot;');
+          if (datoPrevio.inicio) iniR = datoPrevio.inicio;
+          if (datoPrevio.fin) finR = datoPrevio.fin;
+          if (datoPrevio.gps) gpsR = datoPrevio.gps;
+        }
+        itemsOriginalesCargados.push({ name: item.name, sector: item.sector || '', ini: iniValue, fin: finValue });
+        fila.innerHTML =
+          '<td><span class="row-num">' + contador + '</span></td>' +
+          '<td><span class="item-name-text">' + item.name + '</span></td>' +
+          '<td><div class="gps-cell">' +
+            '<div class="gps-btn-row">' +
+              '<button type="button" class="btn-gps" onclick="capturarGPS(this)"><i class="fa-solid fa-satellite-dish"></i> GPS</button>' +
+              '<button type="button" class="btn-gps-eliminar" onclick="eliminarGPS(this)" title="Eliminar ubicación"><i class="fa-solid fa-xmark"></i></button>' +
+            '</div>' +
+            '<div class="gps-coords"></div>' +
+            '<a class="gps-link" href="#" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Maps</a>' +
+            '<div class="gps-error-detail"></div>' +
+          '</div></td>' +
+          '<td><input type="text" class="tbl-input sector" placeholder="Ej: Parque Carcelen" value="' + sectorR + '"></td>' +
+          '<td><select class="tbl-input time inicio">' + opcionesDeHorario + '</select></td>' +
+          '<td><select class="tbl-input time fin">' + opcionesDeHorario + '</select></td>';
         tbody.appendChild(fila);
-        if(iniR)fila.querySelector('.inicio').value=iniR;if(finR)fila.querySelector('.fin').value=finR;
-        if(gpsR)restaurarGPSenFila(fila,gpsR);
+        if (iniR) fila.querySelector('.inicio').value = iniR;
+        if (finR) fila.querySelector('.fin').value = finR;
+        if (gpsR) restaurarGPSenFila(fila, gpsR);
       });
-      document.getElementById('itemCount').textContent=contador;
+      document.getElementById('itemCount').textContent = contador;
+    }
+    function resetearFormulario() {
+      var input = document.getElementById('codigoTransporteInput');
+      codigoTransporteActual = '';
+      fechaInicioSesion = null;
+      input.value = ''; input.disabled = false;
+      document.getElementById('btnCargar').disabled = false;
+      document.getElementById('btnGuardar').disabled = false;
+      document.getElementById('btnGuardar').classList.remove('guardando');
+      limpiarTabla();
+      document.getElementById('mensaje').textContent = '';
+      document.getElementById('mensaje').className = '';
+      input.focus();
     }
 
-    function resetearFormulario(){
-      var input=document.getElementById('codigoTransporteInput');codigoTransporteActual='';fechaInicioSesion=null;
-      input.value='';input.disabled=false;document.getElementById('btnCargar').disabled=false;
-      document.getElementById('btnGuardar').disabled=false;document.getElementById('btnGuardar').classList.remove('guardando');
-      limpiarTabla();document.getElementById('mensaje').textContent='';document.getElementById('mensaje').className='';input.focus();
+    /* ========== CSV ========== */
+    function generarCSVBlob() {
+      var filas = document.querySelectorAll('#tbodyLineas tr');
+      if (filas.length === 0) return null;
+      var csv = '#,Nombre,Sector,Desde,Hasta,Latitud,Longitud,Precisión(m),Maps\n';
+      filas.forEach(function(f) {
+        var n = f.querySelector('.item-name-text') ? f.querySelector('.item-name-text').textContent.trim() : '';
+        var s = f.querySelector('.sector') ? f.querySelector('.sector').value : '';
+        var i = f.querySelector('.inicio') ? f.querySelector('.inicio').value : '';
+        var fi = f.querySelector('.fin') ? f.querySelector('.fin').value : '';
+        var b = f.querySelector('.btn-gps');
+        var lat = b&&b.dataset.lat?b.dataset.lat:''; var lng = b&&b.dataset.lng?b.dataset.lng:''; var acc = b&&b.dataset.accuracy?b.dataset.accuracy:'';
+        var mu = (lat&&lng)?'https://www.google.com/maps?q='+lat+','+lng:'';
+        var esc = function(x){return '"'+(x||'').replace(/"/g,'""')+'"';};
+        csv += f.cells[0].textContent.trim()+','+esc(n)+','+esc(s)+','+i+','+fi+','+lat+','+lng+','+acc+','+esc(mu)+'\n';
+      });
+      return new Blob([csv], {type:'text/csv;charset=utf-8;'});
     }
 
-    function generarCSVBlob(){
-      var filas=document.querySelectorAll('#tbodyLineas tr');if(filas.length===0)return null;
-      var csv='#,Nombre,Sector,Desde,Hasta,Latitud,Longitud,Precisión(m),Maps\n';
-      filas.forEach(function(f){var n=f.querySelector('.item-name-text')?f.querySelector('.item-name-text').textContent.trim():'';var s=f.querySelector('.sector')?f.querySelector('.sector').value:'';var i=f.querySelector('.inicio')?f.querySelector('.inicio').value:'';var fi=f.querySelector('.fin')?f.querySelector('.fin').value:'';var b=f.querySelector('.btn-gps');var lat=b&&b.dataset.lat?b.dataset.lat:'';var lng=b&&b.dataset.lng?b.dataset.lng:'';var acc=b&&b.dataset.accuracy?b.dataset.accuracy:'';var mu=(lat&&lng)?'https://www.google.com/maps?q='+lat+','+lng:'';var esc=function(x){return '"'+(x||'').replace(/"/g,'""')+'"';};csv+=f.cells[0].textContent.trim()+','+esc(n)+','+esc(s)+','+i+','+fi+','+lat+','+lng+','+acc+','+esc(mu)+'\n';});
-      return new Blob([csv],{type:'text/csv;charset=utf-8;'});
-    }
-
-    document.getElementById('gpsModal').addEventListener('click',function(e){if(e.target===this)cerrarModalGPS();});
-    window.addEventListener('DOMContentLoaded',inicializarApp);
+    document.getElementById('gpsModal').addEventListener('click', function(e) { if (e.target === this) cerrarModalGPS(); });
+    window.addEventListener('DOMContentLoaded', inicializarApp);
   </script>
 </body>
 </html>
